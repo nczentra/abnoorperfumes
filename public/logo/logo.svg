@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 100" fill="none">
+  <!-- Monogram Crest -->
+  <g transform="translate(10, 10)">
+    <rect x="0" y="0" width="80" height="80" rx="12" fill="#103B2D" stroke="#C6A15B" stroke-width="2"/>
+    <rect x="5" y="5" width="70" height="70" rx="8" fill="none" stroke="#E5D3A3" stroke-width="0.75" stroke-dasharray="3 2"/>
+    <!-- Intertwined AB letters -->
+    <text x="40" y="54" font-family="'Playfair Display', Georgia, serif" font-size="44" font-weight="700" fill="#C6A15B" text-anchor="middle" letter-spacing="1">AB</text>
+    <!-- Subtle diamond accent -->
+    <path d="M40 18 L43 23 L40 28 L37 23 Z" fill="#E5D3A3"/>
+    <path d="M40 59 L42 62 L40 65 L38 62 Z" fill="#E5D3A3"/>
+  </g>
+  
+  <!-- Brand Typography -->
+  <text x="110" y="50" font-family="'Playfair Display', Georgia, serif" font-size="28" font-weight="700" fill="#103B2D" letter-spacing="4">AB NOOR</text>
+  <text x="111" y="70" font-family="'Inter', sans-serif" font-size="12" font-weight="600" fill="#C6A15B" letter-spacing="6">PERFUMES</text>
+  <text x="112" y="85" font-family="'Cormorant Garamond', Georgia, serif" font-style="italic" font-size="11" fill="#777777" letter-spacing="1">The Essence of Elegance</text>
+</svg>

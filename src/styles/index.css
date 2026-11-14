@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-emerald: #103B2D;
+    --color-dark-forest: #0B2119;
+    --color-gold: #C6A15B;
+    --color-soft-gold: #E5D3A3;
+    --color-ivory: #F8F5EF;
+    --color-charcoal: #171717;
+    --color-muted-grey: #777777;
+  }
+
+  body {
+    background-color: var(--color-ivory);
+    color: var(--color-charcoal);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', Georgia, serif;
+    letter-spacing: -0.01em;
+  }
+}
+
+/* Custom Luxury Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F8F5EF;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #C6A15B;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #103B2D;
+}
+
+/* Gold Shimmer Text & Border Utility */
+.gold-shimmer {
+  background: linear-gradient(90deg, #C6A15B 0%, #FFF2D1 50%, #C6A15B 100%);
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shine 4s linear infinite;
+}
+
+@keyframes shine {
+  to {
+    background-position: 200% center;
+  }
+}
+
+.gold-border-gradient {
+  border-image: linear-gradient(to right, #C6A15B, #E5D3A3, #C6A15B) 1;
+}
+
+.luxury-pattern-bg {
+  background-color: #0B2119;
+  background-image: radial-gradient(rgba(198, 161, 91, 0.12) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.luxury-card {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.luxury-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px -8px rgba(16, 59, 45, 0.16), 0 0 0 1px rgba(198, 161, 91, 0.3);
+}
