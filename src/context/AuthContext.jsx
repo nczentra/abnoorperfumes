@@ -15,6 +15,20 @@ import {
   updateProfile as fbUpdateProfile
 } from 'firebase/auth';
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { emailService } from '../services/emailService';
+
+export const ADMIN_EMAILS = [
+  'abnoorperfumes@gmail.com',
+  'admin@abnoorperfumes.com',
+  'concierge@abnoorperfumes.com',
+  'fasilyousf687@gmail.com',
+];
+
+export const checkIsAdmin = (email) => {
+  if (!email) return false;
+  const lower = email.trim().toLowerCase();
+  return ADMIN_EMAILS.some(a => a.toLowerCase() === lower) || lower.includes('admin');
+};
 
 const AuthContext = createContext();
 
@@ -42,16 +56,22 @@ export const AuthProvider = ({ children }) => {
           // Fetch customer profile from Firestore
           try {
             const userDoc = await getDoc(doc(db, 'users', user.uid));
+            const shouldBeAdmin = checkIsAdmin(user.email);
             if (userDoc.exists()) {
-              setUserProfile(userDoc.data());
+              const data = userDoc.data();
+              if (shouldBeAdmin && data.role !== 'super_admin') {
+                await updateDoc(doc(db, 'users', user.uid), { role: 'super_admin' });
+                data.role = 'super_admin';
+              }
+              setUserProfile(data);
             } else {
               // Create default profile
               const defaultProfile = {
                 uid: user.uid,
-                fullName: user.displayName || 'Royal Patron',
+                fullName: user.displayName || (shouldBeAdmin ? 'Master Perfumer (Admin)' : 'Royal Patron'),
                 email: user.email,
                 phone: user.phoneNumber || '',
-                role: user.email?.includes('admin') ? 'super_admin' : 'customer',
+                role: shouldBeAdmin ? 'super_admin' : 'customer',
                 addresses: [],
                 createdAt: new Date().toISOString(),
               };
@@ -93,6 +113,7 @@ export const AuthProvider = ({ children }) => {
 
   // Register with Email and Password
   const register = async ({ fullName, email, password, phone }) => {
+    const isOwnerOrAdmin = checkIsAdmin(email);
     if (isFirebaseConfigured() && auth) {
       const cred = await createUserWithEmailAndPassword(auth, email, password);
       await fbUpdateProfile(cred.user, { displayName: fullName });
@@ -102,7 +123,7 @@ export const AuthProvider = ({ children }) => {
         fullName,
         email,
         phone: phone || '',
-        role: email.includes('admin') ? 'super_admin' : 'customer',
+        role: isOwnerOrAdmin ? 'super_admin' : 'customer',
         addresses: [],
         createdAt: new Date().toISOString(),
       };
@@ -111,6 +132,10 @@ export const AuthProvider = ({ children }) => {
         await setDoc(doc(db, 'users', cred.user.uid), newProfile);
       }
       setUserProfile(newProfile);
+
+      // Trigger Resend Welcome Email in the background
+      emailService.sendWelcomeEmail({ to: email, name: fullName }).catch(console.warn);
+
       return cred.user;
     } else {
       // Local simulation
@@ -120,29 +145,31 @@ export const AuthProvider = ({ children }) => {
         fullName,
         email,
         phone: phone || '+91 98200 12345',
-        role: email.includes('admin') ? 'super_admin' : 'customer',
+        role: isOwnerOrAdmin ? 'super_admin' : 'customer',
         addresses: [],
         createdAt: new Date().toISOString(),
       };
       saveLocalUser(mockUser);
+      emailService.sendWelcomeEmail({ to: email, name: fullName }).catch(console.warn);
       return mockUser;
     }
   };
 
   // Login with Email and Password
   const login = async (email, password) => {
+    const isOwnerOrAdmin = checkIsAdmin(email);
     if (isFirebaseConfigured() && auth) {
       const cred = await signInWithEmailAndPassword(auth, email, password);
       return cred.user;
     } else {
       // Local simulation
       const mockUser = {
-        uid: 'usr-demo-1',
+        uid: isOwnerOrAdmin ? 'usr-admin-demo' : 'usr-demo-1',
         displayName: email.split('@')[0],
-        fullName: email.includes('admin') ? 'Master Perfumer & Admin' : 'Faisal Al-Noor',
+        fullName: isOwnerOrAdmin ? 'Master Perfumer & Admin' : 'Faisal Al-Noor',
         email,
         phone: '+91 98765 43210',
-        role: (email.includes('admin') || password === 'admin123') ? 'super_admin' : 'customer',
+        role: isOwnerOrAdmin || password === 'admin123' ? 'super_admin' : 'customer',
         addresses: [
           {
             id: 'addr-1',
@@ -169,6 +196,28 @@ export const AuthProvider = ({ children }) => {
   const loginWithGoogle = async () => {
     if (isFirebaseConfigured() && auth && googleProvider) {
       const cred = await signInWithPopup(auth, googleProvider);
+      const isOwnerOrAdmin = checkIsAdmin(cred.user.email);
+      if (db) {
+        try {
+          const userDoc = await getDoc(doc(db, 'users', cred.user.uid));
+          if (!userDoc.exists()) {
+            const profile = {
+              uid: cred.user.uid,
+              fullName: cred.user.displayName || 'Gentleman Patron',
+              email: cred.user.email,
+              phone: cred.user.phoneNumber || '',
+              role: isOwnerOrAdmin ? 'super_admin' : 'customer',
+              addresses: [],
+              createdAt: new Date().toISOString(),
+            };
+            await setDoc(doc(db, 'users', cred.user.uid), profile);
+            setUserProfile(profile);
+            emailService.sendWelcomeEmail({ to: cred.user.email, name: cred.user.displayName }).catch(console.warn);
+          }
+        } catch (e) {
+          console.warn('Google profile creation error:', e);
+        }
+      }
       return cred.user;
     } else {
       const mockUser = {

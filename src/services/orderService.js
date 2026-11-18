@@ -3,6 +3,7 @@ import { db, isFirebaseConfigured } from '../firebase/config';
 import { collection, getDocs, doc, setDoc, updateDoc, query, where } from 'firebase/firestore';
 import { productService } from './productService';
 import { inventoryService } from './inventoryService';
+import { emailService } from './emailService';
 
 const getLocalOrders = () => {
   try {
@@ -150,6 +151,16 @@ export const orderService = {
       }
     }
 
+    // Trigger confirmation email to customer & admin alert in background
+    if (newOrder.customerSnapshot?.email) {
+      emailService.sendOrderConfirmationEmail({
+        to: newOrder.customerSnapshot.email,
+        name: newOrder.customerSnapshot.name,
+        order: newOrder,
+      }).catch(err => console.warn('Order email notification error:', err));
+    }
+    emailService.sendAdminNewOrderAlert({ order: newOrder }).catch(err => console.warn('Admin alert email error:', err));
+
     return newOrder;
   },
 
@@ -188,12 +199,25 @@ export const orderService = {
 
     const local = getLocalOrders();
     const idx = local.findIndex(o => o.id === orderId);
+    let finalOrder = { ...order, ...updated };
     if (idx !== -1) {
       local[idx] = { ...local[idx], ...updated };
       saveLocalOrders(local);
-      return local[idx];
+      finalOrder = local[idx];
     }
-    return null;
+
+    // Send dispatch status email to patron
+    if (finalOrder.customerSnapshot?.email) {
+      emailService.sendOrderStatusUpdateEmail({
+        to: finalOrder.customerSnapshot.email,
+        name: finalOrder.customerSnapshot.name,
+        orderNumber: finalOrder.orderNumber,
+        status: newStatus,
+        trackingNumber: finalOrder.trackingNumber,
+      }).catch(err => console.warn('Status update email error:', err));
+    }
+
+    return finalOrder;
   },
 
   // Cancel order (Customer or Admin)
