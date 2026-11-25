@@ -75,9 +75,9 @@ export const MobileNavDrawer = ({
                   <Link
                     to="/admin/dashboard"
                     onClick={onClose}
-                    className="flex items-center gap-2 px-3 py-2 bg-red-600 text-white text-xs font-bold rounded-xl shadow-md transition mt-2"
+                    className="flex items-center gap-2 px-3 py-2 bg-blue-800 text-white text-xs font-bold rounded-xl border border-blue-400/40 shadow-md transition mt-2"
                   >
-                    <LayoutDashboard className="w-4 h-4" />
+                    <LayoutDashboard className="w-4 h-4 text-blue-200" />
                     <span>Store Admin Dashboard</span>
                   </Link>
                 )}
