@@ -89,22 +89,22 @@ export const TrackOrder = () => {
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-brand-emerald mb-1.5">
+              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
                 Billing Email or Mobile *
               </label>
               <input
                 type="text"
                 required
-                placeholder="e.g. tariq@example.com"
+                placeholder="e.g. gentleman@gmail.com"
                 value={contact}
                 onChange={(e) => setContact(e.target.value)}
-                className="w-full px-4 py-2.5 text-xs bg-stone-50 border border-stone-300 rounded-xl focus:outline-none focus:border-brand-emerald"
+                className="w-full px-4 py-2.5 text-xs bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-blue-600 focus:bg-white text-slate-800"
               />
             </div>
           </div>
 
           {error && (
-            <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-center gap-2">
+            <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
               <AlertCircle className="w-4 h-4 shrink-0" />
               <span>{error}</span>
             </div>
@@ -113,16 +113,12 @@ export const TrackOrder = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3.5 bg-brand-emerald hover:bg-brand-dark-forest text-brand-soft-gold rounded-xl font-bold text-xs uppercase tracking-widest transition shadow-lg shadow-brand-emerald/20 flex items-center justify-center gap-2"
+            className="w-full py-3.5 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white rounded-xl font-bold text-xs uppercase tracking-widest transition shadow-lg shadow-red-600/30 flex items-center justify-center gap-2"
           >
-            <PackageSearch className="w-4 h-4 text-brand-gold" />
+            <PackageSearch className="w-4 h-4 text-white" />
             <span>{loading ? 'Tracking Shipment...' : 'Locate Shipment'}</span>
           </button>
         </form>
-
-        <div className="pt-4 mt-4 border-t border-stone-100 text-[11px] text-stone-400 text-center">
-          Sample order for demonstration: Number <strong>ABN-2026-9842</strong>, Email <strong>tariq.mansoor@example.com</strong>
-        </div>
       </div>
 
       {/* Order Tracking Result Card */}

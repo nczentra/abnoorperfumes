@@ -38,9 +38,9 @@ const STORAGE_KEYS = {
   USERS: 'ab_noor_users',
 };
 
-const CURRENT_VERSION = 'v4_blue_white_theme';
+const CURRENT_VERSION = 'v5_clean_production_store';
 
-// Seed initial data if not present or if upgrading to blue/black theme
+// Seed initial data if not present or if upgrading store version
 export const initializeDataStore = () => {
   if (typeof window === 'undefined') return;
 
@@ -52,6 +52,12 @@ export const initializeDataStore = () => {
     localStorage.setItem(STORAGE_KEYS.BANNERS, JSON.stringify(SEED_BANNERS));
     localStorage.setItem(STORAGE_KEYS.COUPONS, JSON.stringify(SEED_COUPONS));
     localStorage.setItem(STORAGE_KEYS.BLOGS, JSON.stringify(SEED_BLOGS));
+    
+    // Clear dummy orders, dummy reviews, and dummy logs for clean production state
+    localStorage.setItem(STORAGE_KEYS.ORDERS, JSON.stringify([]));
+    localStorage.setItem(STORAGE_KEYS.REVIEWS, JSON.stringify([]));
+    localStorage.setItem(STORAGE_KEYS.INVENTORY_LOGS, JSON.stringify([]));
+
     localStorage.setItem(STORAGE_KEYS.VERSION, CURRENT_VERSION);
 
     // Seed master admin
@@ -87,147 +93,13 @@ export const initializeDataStore = () => {
     localStorage.setItem(STORAGE_KEYS.BLOGS, JSON.stringify(SEED_BLOGS));
   }
   if (!localStorage.getItem(STORAGE_KEYS.REVIEWS)) {
-    const initialReviews = [
-      {
-        id: 'rev-1',
-        productId: 'prod-001',
-        productName: 'Sultanate Dehn Al Oud Royale',
-        userId: 'usr-1',
-        userName: 'Hamdan Al-Maktoum',
-        userEmail: 'hamdan@example.com',
-        rating: 5,
-        title: 'True Vintage Cambodian Royalty',
-        comment: 'The depth of this agarwood is breathtaking. I have worn high-end artisanal oud for twenty years, and this is on par with royal private distillations. Lasted over 26 hours on my linen shirt.',
-        status: 'approved',
-        verifiedPurchase: true,
-        createdAt: '2026-11-01T10:30:00Z',
-      },
-      {
-        id: 'rev-2',
-        productId: 'prod-002',
-        productName: 'Noor Al Layl Pour Homme',
-        userId: 'usr-2',
-        userName: 'Farhan Qureshi',
-        userEmail: 'farhan@example.com',
-        rating: 5,
-        title: 'Commanding night incense & dark amber',
-        comment: 'Wore this to a formal banquet. The drydown of smoky woods, frankincense, and dark amber is phenomenal. Heavy luxury bottle with magnetic cap.',
-        status: 'approved',
-        verifiedPurchase: true,
-        createdAt: '2026-11-05T14:20:00Z',
-      },
-      {
-        id: 'rev-3',
-        productId: 'prod-004',
-        productName: 'Sahara Cuir Noir',
-        userId: 'usr-3',
-        userName: 'Zayd Merchant',
-        userEmail: 'zayd@example.com',
-        rating: 5,
-        title: 'The ultimate gentleman fragrance',
-        comment: 'Dark Tuscan leather with roasted coffee and smoky woods. Very masculine, projects with intense authority.',
-        status: 'approved',
-        verifiedPurchase: true,
-        createdAt: '2026-11-09T08:15:00Z',
-      },
-    ];
-    localStorage.setItem(STORAGE_KEYS.REVIEWS, JSON.stringify(initialReviews));
+    localStorage.setItem(STORAGE_KEYS.REVIEWS, JSON.stringify([]));
   }
   if (!localStorage.getItem(STORAGE_KEYS.ORDERS)) {
-    const initialOrders = [
-      {
-        id: 'ORD-984210',
-        orderNumber: 'ABN-2026-9842',
-        userId: 'usr-demo-1',
-        customerSnapshot: {
-          name: 'Tariq Al-Mansoor',
-          email: 'tariq.mansoor@example.com',
-          phone: '+91 98200 12345',
-        },
-        itemsSnapshot: [
-          {
-            productId: 'prod-001',
-            productName: 'Sultanate Dehn Al Oud Royale',
-            variantSize: '50ml',
-            sku: 'SULT-OUD-50',
-            price: 10999,
-            quantity: 1,
-            image: 'https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=300&q=80',
-          },
-          {
-            productId: 'prod-005',
-            productName: 'Musk Al Ghazal Pure Royal Attar',
-            variantSize: '6ml',
-            sku: 'ATTAR-GHAZAL-6',
-            price: 2999,
-            quantity: 1,
-            image: 'https://images.unsplash.com/photo-1608528577891-9855f4c864e0?auto=format&fit=crop&w=300&q=80',
-          },
-        ],
-        addressSnapshot: {
-          fullName: 'Tariq Al-Mansoor',
-          phone: '+91 98200 12345',
-          houseNumber: 'Villa 14, Royal Crest',
-          street: 'Altamount Road',
-          locality: 'Cumballa Hill',
-          city: 'Mumbai',
-          state: 'Maharashtra',
-          pincode: '400026',
-          addressType: 'Home',
-        },
-        subtotal: 13998,
-        discount: 500,
-        couponCode: 'NOORROYAL',
-        shippingCharge: 0,
-        tax: 0,
-        totalAmount: 13498,
-        paymentMethod: 'razorpay',
-        paymentStatus: 'paid',
-        paymentDetails: {
-          razorpayPaymentId: 'pay_N982hfk298a',
-          paidAt: '2026-11-12T11:20:00Z',
-        },
-        orderStatus: 'shipped',
-        courier: 'Blue Dart Luxury Express',
-        trackingNumber: 'BD-982348719IN',
-        statusHistory: [
-          { status: 'placed', timestamp: '2026-11-12T11:20:00Z', note: 'Order placed successfully' },
-          { status: 'confirmed', timestamp: '2026-11-12T12:00:00Z', note: 'Order verified by concierge' },
-          { status: 'packed', timestamp: '2026-11-12T15:30:00Z', note: 'Sealed in signature emerald box' },
-          { status: 'shipped', timestamp: '2026-11-13T09:15:00Z', note: 'Handed over to Blue Dart Express' },
-        ],
-        createdAt: '2026-11-12T11:20:00Z',
-        updatedAt: '2026-11-13T09:15:00Z',
-      },
-    ];
-    localStorage.setItem(STORAGE_KEYS.ORDERS, JSON.stringify(initialOrders));
+    localStorage.setItem(STORAGE_KEYS.ORDERS, JSON.stringify([]));
   }
   if (!localStorage.getItem(STORAGE_KEYS.INVENTORY_LOGS)) {
-    const initialLogs = [
-      {
-        id: 'log-1',
-        productId: 'prod-001',
-        productName: 'Sultanate Dehn Al Oud Royale',
-        variantSize: '50ml',
-        type: 'STOCK_IN',
-        quantity: 15,
-        reason: 'New distillation batch received from Cambodia',
-        staffName: 'Master Nose Faisal',
-        createdAt: '2026-11-10T09:00:00Z',
-      },
-      {
-        id: 'log-2',
-        productId: 'prod-001',
-        productName: 'Sultanate Dehn Al Oud Royale',
-        variantSize: '50ml',
-        type: 'STOCK_OUT',
-        quantity: -1,
-        reason: 'Order #ABN-2026-9842 fulfillment',
-        staffName: 'System',
-        createdAt: '2026-11-12T11:20:00Z',
-      },
-    ];
-    localStorage.setItem(STORAGE_KEYS.INVENTORY_LOGS, JSON.stringify(initialLogs));
+    localStorage.setItem(STORAGE_KEYS.INVENTORY_LOGS, JSON.stringify([]));
   }
   if (!localStorage.getItem(STORAGE_KEYS.SETTINGS)) {
     const initialSettings = {

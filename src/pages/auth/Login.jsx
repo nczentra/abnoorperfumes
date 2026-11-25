@@ -6,8 +6,8 @@ import { Lock, Mail, ArrowRight, ShieldCheck, LogIn, Crown, Eye, EyeOff } from '
 import { toast } from 'sonner';
 
 export const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('abnoorperfumes@gmail.com');
+  const [password, setPassword] = useState('admin123');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');

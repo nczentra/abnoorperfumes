@@ -159,32 +159,51 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     const isOwnerOrAdmin = checkIsAdmin(email);
     if (isFirebaseConfigured() && auth) {
-      const cred = await signInWithEmailAndPassword(auth, email, password);
-      return cred.user;
+      try {
+        const cred = await signInWithEmailAndPassword(auth, email, password);
+        return cred.user;
+      } catch (authErr) {
+        // If logging in as official store admin and account hasn't been created yet in Firebase Auth,
+        // provision the master admin account on the spot!
+        if (isOwnerOrAdmin && (
+          authErr.code === 'auth/user-not-found' || 
+          authErr.code === 'auth/invalid-credential' || 
+          authErr.code === 'auth/invalid-login-credentials'
+        )) {
+          try {
+            const newCred = await createUserWithEmailAndPassword(auth, email, password);
+            await fbUpdateProfile(newCred.user, { displayName: 'AB Noor Admin' });
+            const adminProfile = {
+              uid: newCred.user.uid,
+              fullName: 'AB Noor Store Admin',
+              email,
+              phone: '+91 98765 43210',
+              role: 'super_admin',
+              addresses: [],
+              createdAt: new Date().toISOString(),
+            };
+            if (db) {
+              await setDoc(doc(db, 'users', newCred.user.uid), adminProfile);
+            }
+            setUserProfile(adminProfile);
+            return newCred.user;
+          } catch (createErr) {
+            console.warn('Auto-provisioning admin user in Firebase failed:', createErr);
+            throw authErr;
+          }
+        }
+        throw authErr;
+      }
     } else {
-      // Local simulation
+      // Clean local authentication fallback
       const mockUser = {
-        uid: isOwnerOrAdmin ? 'usr-admin-demo' : 'usr-demo-1',
-        displayName: email.split('@')[0],
-        fullName: isOwnerOrAdmin ? 'Master Perfumer & Admin' : 'Faisal Al-Noor',
+        uid: isOwnerOrAdmin ? 'usr-admin-master' : `usr-${Date.now()}`,
+        displayName: isOwnerOrAdmin ? 'AB Noor Admin' : email.split('@')[0],
+        fullName: isOwnerOrAdmin ? 'AB Noor Store Admin' : email.split('@')[0],
         email,
         phone: '+91 98765 43210',
-        role: isOwnerOrAdmin || password === 'admin123' ? 'super_admin' : 'customer',
-        addresses: [
-          {
-            id: 'addr-1',
-            fullName: 'Faisal Al-Noor',
-            phone: '+91 98765 43210',
-            houseNumber: 'Royal Penthouse 12',
-            street: 'Arabian Promenade',
-            locality: 'Colaba',
-            city: 'Mumbai',
-            state: 'Maharashtra',
-            pincode: '400005',
-            addressType: 'Home',
-            isDefault: true,
-          }
-        ],
+        role: isOwnerOrAdmin ? 'super_admin' : 'customer',
+        addresses: [],
         createdAt: new Date().toISOString(),
       };
       saveLocalUser(mockUser);

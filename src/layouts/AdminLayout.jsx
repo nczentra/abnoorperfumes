@@ -74,13 +74,6 @@ export const AdminLayout = () => {
             <ExternalLink className="w-3.5 h-3.5" />
           </Link>
 
-          <button
-            onClick={toggleRole}
-            className="text-[10px] text-slate-400 hover:text-blue-300 underline hidden sm:inline"
-          >
-            Switch View
-          </button>
-
           <div className="flex items-center gap-2 pl-3 border-l border-white/20">
             <div className="text-right hidden md:block">
               <strong className="text-white block font-semibold leading-tight text-xs">
