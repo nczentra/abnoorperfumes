@@ -111,8 +111,19 @@ export const MobileNavDrawer = ({
               </div>
             </div>
 
+            <div className="pt-3 border-t border-white/10 space-y-1">
+              <Link
+                to="/login"
+                onClick={onClose}
+                className="flex items-center justify-between p-3 rounded-xl bg-blue-900/40 text-blue-100 hover:text-white transition"
+              >
+                <span>Sign In / Create Account</span>
+                <ChevronRight className="w-4 h-4 opacity-50" />
+              </Link>
+            </div>
+
             {isAdmin && (
-              <div className="pt-4 border-t border-white/10">
+              <div className="pt-2 border-t border-white/10">
                 <Link
                   to="/admin/dashboard"
                   onClick={onClose}

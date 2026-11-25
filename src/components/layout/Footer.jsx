@@ -186,7 +186,12 @@ export const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/admin/dashboard" className="hover:text-red-400 transition text-red-400 font-bold">
+                <Link to="/login" className="hover:text-red-400 transition text-blue-300 font-semibold">
+                  Sign In / Create Account
+                </Link>
+              </li>
+              <li>
+                <Link to="/login" className="hover:text-red-400 transition text-red-400 font-bold">
                   Store Admin Portal
                 </Link>
               </li>

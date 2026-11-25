@@ -15,7 +15,8 @@ import {
   ChevronDown, 
   Compass,
   ArrowRight,
-  ShieldCheck
+  ShieldCheck,
+  User
 } from 'lucide-react';
 
 export const Header = () => {
@@ -216,6 +217,16 @@ export const Header = () => {
                   </span>
                 )}
               </button>
+
+              {/* Sleek 1-Click Sign In / Admin Link */}
+              <Link
+                to="/login"
+                className="p-2 text-blue-100 hover:text-white hover:bg-white/10 rounded-xl transition"
+                title="Sign In / Admin"
+                aria-label="Sign In or Create Account"
+              >
+                <User className="w-5 h-5" />
+              </Link>
 
               {/* Administrator Shortcut (Only visible if already authenticated as Admin) */}
               {isAdmin && (
