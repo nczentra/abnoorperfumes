@@ -11,25 +11,20 @@ import {
   Search, 
   Heart, 
   ShoppingBag, 
-  User, 
   Menu, 
   ChevronDown, 
-  ShieldCheck, 
-  LogOut, 
   Compass,
-  LayoutDashboard,
-  PackageCheck,
-  ArrowRight
+  ArrowRight,
+  ShieldCheck
 } from 'lucide-react';
 
 export const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
   const [isShopMenuOpen, setIsShopMenuOpen] = useState(false);
 
-  const { currentUser, isAdmin, logout } = useAuth();
+  const { isAdmin } = useAuth();
   const { totalItemCount, setIsCartOpen } = useCart();
   const { wishlistCount } = useWishlist();
   const location = useLocation();
@@ -42,9 +37,8 @@ export const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close menus on route change or outside click
+  // Close menus on route change
   useEffect(() => {
-    setIsAccountDropdownOpen(false);
     setIsShopMenuOpen(false);
     setIsMobileMenuOpen(false);
   }, [location.pathname]);
@@ -83,8 +77,8 @@ export const Header = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             
-            {/* Left: Mobile Menu Trigger & Formal Logo */}
-            <div className="flex items-center gap-3 sm:gap-4">
+            {/* Left: Mobile Menu Trigger & Simple Logo */}
+            <div className="flex items-center gap-3 sm:gap-4 shrink-0">
               <button
                 onClick={() => setIsMobileMenuOpen(true)}
                 className="lg:hidden p-2 text-blue-100 hover:text-white rounded-xl hover:bg-white/10 transition"
@@ -96,8 +90,8 @@ export const Header = () => {
               <MonogramLogo variant="light" />
             </div>
 
-            {/* Center: Formal Desktop Navigation Links */}
-            <nav className="hidden lg:flex items-center gap-8 xl:gap-10 text-xs font-semibold uppercase tracking-[0.18em]">
+            {/* Center: Formal Desktop Navigation */}
+            <nav className="hidden lg:flex items-center gap-8 xl:gap-10 text-xs font-semibold uppercase tracking-[0.16em]">
               {navLinks.map((link) => {
                 const isActive = location.pathname === link.path || (link.hasDropdown && location.pathname.startsWith('/category'));
                 
@@ -180,172 +174,60 @@ export const Header = () => {
               })}
             </nav>
 
-            {/* Right: Formal Action Utilities */}
-            <div className="flex items-center gap-2 sm:gap-3">
+            {/* Right: Formal Action Utilities (Search, Wishlist, Bag - No user clutter) */}
+            <div className="flex items-center gap-2 sm:gap-3 shrink-0">
               
-              {/* Search Trigger */}
+              {/* Search */}
               <button
                 onClick={() => setIsSearchOpen(true)}
-                className="p-2.5 text-blue-100 hover:text-white hover:bg-white/10 rounded-xl transition"
+                className="p-2 text-blue-100 hover:text-white hover:bg-white/10 rounded-xl transition"
                 title="Search fragrances"
                 aria-label="Search"
               >
                 <Search className="w-5 h-5" />
               </button>
 
-              {/* Wishlist Trigger */}
+              {/* Wishlist */}
               <Link
                 to="/account/wishlist"
-                className="p-2.5 text-blue-100 hover:text-white hover:bg-white/10 rounded-xl transition relative"
-                title="Your Wishlist"
+                className="p-2 text-blue-100 hover:text-white hover:bg-white/10 rounded-xl transition relative"
+                title="Wishlist"
                 aria-label="Wishlist"
               >
                 <Heart className="w-5 h-5" />
                 {wishlistCount > 0 && (
-                  <span className="absolute top-1.5 right-1.5 bg-red-600 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                  <span className="absolute top-1 right-1 bg-red-600 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
                     {wishlistCount}
                   </span>
                 )}
               </Link>
 
-              {/* Shopping Bag Trigger with Red Button badge */}
+              {/* Shopping Bag with red count badge */}
               <button
                 onClick={() => setIsCartOpen(true)}
-                className="p-2.5 text-blue-100 hover:text-white hover:bg-white/10 rounded-xl transition relative"
-                title="Luxury Shopping Bag"
+                className="p-2 text-blue-100 hover:text-white hover:bg-white/10 rounded-xl transition relative"
+                title="Shopping Bag"
                 aria-label="Shopping bag"
               >
                 <ShoppingBag className="w-5 h-5" />
                 {totalItemCount > 0 && (
-                  <span className="absolute top-1.5 right-1.5 bg-red-600 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-md shadow-red-600/40">
+                  <span className="absolute top-1 right-1 bg-red-600 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-md shadow-red-600/40">
                     {totalItemCount}
                   </span>
                 )}
               </button>
 
-              {/* Account Dropdown */}
-              <div className="relative">
-                <button
-                  onClick={() => setIsAccountDropdownOpen(!isAccountDropdownOpen)}
-                  className={`px-3 py-2 flex items-center gap-2 rounded-xl text-xs font-semibold tracking-wider uppercase transition border ${
-                    isAdmin
-                      ? 'border-blue-400/60 bg-blue-900/50 text-white hover:bg-blue-900/80'
-                      : 'border-white/20 hover:border-white/40 hover:bg-white/10 text-white'
-                  }`}
-                  aria-label="User Account"
+              {/* Administrator Shortcut (Only visible if already authenticated as Admin) */}
+              {isAdmin && (
+                <Link
+                  to="/admin/dashboard"
+                  className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-900/60 hover:bg-blue-900 border border-blue-400/50 rounded-xl text-xs font-bold text-white transition ml-1"
+                  title="Store Admin Dashboard"
                 >
-                  <User className="w-4 h-4 text-blue-300" />
-                  <span className="hidden md:inline font-medium capitalize text-[13px]">
-                    {currentUser ? (currentUser.displayName?.split(' ')[0] || 'My Account') : 'Account'}
-                  </span>
-                  <ChevronDown className="w-3.5 h-3.5 opacity-70 hidden sm:inline" />
-                </button>
-
-                {/* Formal Account Popover */}
-                {isAccountDropdownOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-72 bg-[#0A192F] text-white rounded-2xl shadow-2xl border border-blue-700/50 p-3 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-                    {currentUser ? (
-                      <div className="p-3 border-b border-white/10 mb-2">
-                        <div className="flex items-center justify-between">
-                          <span className="font-bold text-white text-sm block">
-                            {currentUser.displayName || 'Gentleman Patron'}
-                          </span>
-                          {isAdmin && (
-                            <span className="px-2 py-0.5 bg-red-600 text-white text-[9px] font-bold uppercase rounded-full">
-                              Admin
-                            </span>
-                          )}
-                        </div>
-                        <span className="text-xs text-blue-300 font-mono block mt-0.5 truncate">
-                          {currentUser.email}
-                        </span>
-                      </div>
-                    ) : (
-                      <div className="p-3 border-b border-white/10 mb-2 text-center">
-                        <span className="font-playfair font-bold text-sm text-white block">
-                          House of AB Noor
-                        </span>
-                        <p className="text-[11px] text-blue-200/80 font-light mt-1 mb-3">
-                          Sign in to access your luxury bag, order history, and exclusive allocations.
-                        </p>
-                        <div className="grid grid-cols-2 gap-2">
-                          <Link
-                            to="/login"
-                            className="py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold text-center block transition shadow-md shadow-red-600/30 uppercase tracking-wider"
-                          >
-                            Sign In
-                          </Link>
-                          <Link
-                            to="/register"
-                            className="py-2.5 bg-blue-900/50 hover:bg-blue-900/80 border border-blue-400/40 text-blue-100 rounded-xl text-xs font-bold text-center block transition uppercase tracking-wider"
-                          >
-                            Register
-                          </Link>
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Navigation Menu in Dropdown */}
-                    <div className="space-y-1 text-xs">
-                      {currentUser && (
-                        <>
-                          <Link
-                            to="/account/overview"
-                            className="flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-blue-900/50 hover:text-white transition"
-                          >
-                            <User className="w-4 h-4 text-blue-300" />
-                            <span>My Account</span>
-                          </Link>
-                          <Link
-                            to="/account/orders"
-                            className="flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-blue-900/50 hover:text-white transition"
-                          >
-                            <ShoppingBag className="w-4 h-4 text-blue-300" />
-                            <span>Orders & Invoices</span>
-                          </Link>
-                        </>
-                      )}
-
-                      <Link
-                        to="/track-order"
-                        className="flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-blue-900/50 hover:text-white transition"
-                      >
-                        <PackageCheck className="w-4 h-4 text-blue-300" />
-                        <span>Track Order Consignment</span>
-                      </Link>
-
-                      {/* Store Administration Shortcut */}
-                      {isAdmin ? (
-                        <Link
-                          to="/admin/dashboard"
-                          className="flex items-center gap-2.5 p-2.5 rounded-xl bg-blue-900/60 border border-blue-500/40 text-blue-100 hover:bg-blue-900 transition font-bold my-1"
-                        >
-                          <LayoutDashboard className="w-4 h-4 text-blue-300" />
-                          <span>Store Administration</span>
-                        </Link>
-                      ) : (
-                        <Link
-                          to="/login"
-                          className="flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-blue-900/50 text-blue-200 transition"
-                        >
-                          <ShieldCheck className="w-4 h-4 text-blue-300" />
-                          <span>Admin Portal Login</span>
-                        </Link>
-                      )}
-
-                      {currentUser && (
-                        <button
-                          onClick={logout}
-                          className="w-full flex items-center gap-2.5 p-2.5 rounded-xl text-red-300 hover:bg-red-950/40 transition text-left pt-2 border-t border-white/10 mt-1"
-                        >
-                          <LogOut className="w-4 h-4 text-red-400" />
-                          <span>Sign Out</span>
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                )}
-              </div>
+                  <ShieldCheck className="w-3.5 h-3.5 text-blue-300" />
+                  <span>Admin</span>
+                </Link>
+              )}
 
             </div>
 

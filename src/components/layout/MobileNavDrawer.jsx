@@ -6,10 +6,8 @@ import {
   ChevronRight, 
   ShoppingBag, 
   Heart, 
-  User, 
   Phone, 
   Mail, 
-  MapPin, 
   Compass, 
   ShieldCheck,
   LayoutDashboard
@@ -24,7 +22,7 @@ export const MobileNavDrawer = ({
   navLinks,
   categoryItems,
 }) => {
-  const { currentUser, isAdmin, logout } = useAuth();
+  const { isAdmin } = useAuth();
   const { wishlistCount } = useWishlist();
   const { totalItemCount } = useCart();
 
@@ -53,53 +51,24 @@ export const MobileNavDrawer = ({
             </button>
           </div>
 
-          {/* User Quick Bar */}
-          <div className="p-4 bg-[#0A192F]/60 border-b border-white/10">
-            {currentUser ? (
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="font-bold text-sm text-white">
-                    {currentUser.displayName || 'Gentleman Patron'}
-                  </span>
-                  {isAdmin && (
-                    <span className="px-2 py-0.5 bg-red-600 text-white text-[9px] font-bold uppercase rounded-full">
-                      Admin
-                    </span>
-                  )}
-                </div>
-                <span className="text-xs text-blue-300 font-mono block truncate">
-                  {currentUser.email}
-                </span>
-
-                {isAdmin && (
-                  <Link
-                    to="/admin/dashboard"
-                    onClick={onClose}
-                    className="flex items-center gap-2 px-3 py-2 bg-blue-800 text-white text-xs font-bold rounded-xl border border-blue-400/40 shadow-md transition mt-2"
-                  >
-                    <LayoutDashboard className="w-4 h-4 text-blue-200" />
-                    <span>Store Admin Dashboard</span>
-                  </Link>
-                )}
-              </div>
-            ) : (
-              <div className="grid grid-cols-2 gap-2">
-                <Link
-                  to="/login"
-                  onClick={onClose}
-                  className="py-2 text-center bg-red-600 text-white rounded-xl font-bold text-xs uppercase"
-                >
-                  Sign In
-                </Link>
-                <Link
-                  to="/register"
-                  onClick={onClose}
-                  className="py-2 text-center bg-blue-900/50 border border-blue-500/30 text-blue-200 rounded-xl font-bold text-xs uppercase"
-                >
-                  Register
-                </Link>
-              </div>
-            )}
+          {/* Quick Cart & Wishlist Utility on Mobile */}
+          <div className="p-3 bg-[#0F2C59]/60 border-b border-white/10 flex items-center justify-around text-xs">
+            <Link
+              to="/account/wishlist"
+              onClick={onClose}
+              className="flex items-center gap-1.5 py-1.5 px-3 rounded-lg hover:bg-white/10 text-blue-100 transition"
+            >
+              <Heart className="w-4 h-4 text-red-400" />
+              <span>Wishlist ({wishlistCount})</span>
+            </Link>
+            <Link
+              to="/cart"
+              onClick={onClose}
+              className="flex items-center gap-1.5 py-1.5 px-3 rounded-lg hover:bg-white/10 text-blue-100 transition"
+            >
+              <ShoppingBag className="w-4 h-4 text-blue-300" />
+              <span>Bag ({totalItemCount})</span>
+            </Link>
           </div>
 
           {/* Navigation Links */}
@@ -110,7 +79,7 @@ export const MobileNavDrawer = ({
                   key={link.name}
                   to={link.path}
                   onClick={onClose}
-                  className="flex items-center justify-between p-3 rounded-xl hover:bg-blue-900/40 text-slate-200 hover:text-white transition"
+                  className="flex items-center justify-between p-3 rounded-xl hover:bg-blue-900/40 text-blue-100 hover:text-white transition"
                 >
                   <span>{link.name}</span>
                   <ChevronRight className="w-4 h-4 opacity-40" />
@@ -121,7 +90,7 @@ export const MobileNavDrawer = ({
             {/* Curated Men's Fragrance Collections */}
             <div className="pt-4 border-t border-white/10 space-y-2">
               <span className="text-[10px] text-blue-400 font-bold uppercase tracking-widest block px-3">
-                Curated Collections
+                Fragrance Collections
               </span>
               <div className="space-y-1 normal-case">
                 {categoryItems.map((cat) => (
@@ -134,17 +103,30 @@ export const MobileNavDrawer = ({
                     <span className="font-playfair font-bold text-sm text-white block">
                       {cat.name}
                     </span>
-                    <span className="text-[11px] text-slate-400 leading-tight block">
+                    <span className="text-[11px] text-blue-200/70 leading-tight block">
                       {cat.desc}
                     </span>
                   </Link>
                 ))}
               </div>
             </div>
+
+            {isAdmin && (
+              <div className="pt-4 border-t border-white/10">
+                <Link
+                  to="/admin/dashboard"
+                  onClick={onClose}
+                  className="flex items-center gap-2 p-3 bg-blue-900/70 border border-blue-400/40 rounded-xl text-white font-bold transition"
+                >
+                  <LayoutDashboard className="w-4 h-4 text-blue-300" />
+                  <span>Store Administration</span>
+                </Link>
+              </div>
+            )}
           </div>
 
           {/* Footer Contact */}
-          <div className="p-4 border-t border-white/10 text-xs text-slate-400 space-y-2">
+          <div className="p-4 border-t border-white/10 text-xs text-blue-200/70 space-y-2">
             <div className="flex items-center gap-2">
               <Mail className="w-4 h-4 text-red-500" />
               <span>abnoorperfumes@gmail.com</span>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { MonogramLogo } from '../../components/common/MonogramLogo';
-import { Lock, Mail, User, Phone, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Lock, Mail, User, Phone, ArrowRight, ShieldCheck, UserPlus, Eye, EyeOff } from 'lucide-react';
 import { toast } from 'sonner';
 
 export const Register = () => {
@@ -14,6 +14,7 @@ export const Register = () => {
     confirmPassword: '',
     agreeTerms: true,
   });
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -43,155 +44,174 @@ export const Register = () => {
         password: formData.password,
       });
 
-      toast.success('Your royal account has been created!', {
-        description: 'Enjoy 10% off with promo code WELCOME10',
+      toast.success('Your account has been created successfully!', {
+        description: 'Welcome to AB Noor Perfumes.',
       });
       navigate('/account/overview');
     } catch (err) {
-      setError(err.message || 'Registration could not be completed.');
+      setError(err.message || 'Registration could not be completed. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-[85vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full bg-white rounded-3xl border border-stone-200/80 p-8 sm:p-10 shadow-xl space-y-6">
+    <div className="min-h-[85vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-slate-50">
+      <div className="max-w-md w-full bg-white rounded-3xl border border-slate-200 p-8 sm:p-10 shadow-xl space-y-6">
         
+        {/* Simple Brand Header */}
         <div className="text-center space-y-2">
           <div className="flex justify-center mb-2">
             <MonogramLogo variant="dark" />
           </div>
-          <h2 className="font-playfair text-2xl font-bold text-brand-emerald">
-            Register as a Patron
+          <h2 className="font-playfair text-2xl font-bold text-slate-900">
+            Create an Account
           </h2>
-          <p className="text-xs text-stone-500 font-light">
-            Receive exclusive invitations to private reserves and track your orders.
+          <p className="text-xs text-slate-500 font-light">
+            Join the AB Noor private circle to manage orders and track shipments.
           </p>
         </div>
 
         {error && (
-          <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl text-rose-700 text-xs">
-            {error}
+          <div className="p-3.5 bg-red-50 border border-red-200 rounded-xl text-red-700 text-xs flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-red-600 shrink-0" />
+            <span>{error}</span>
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4 text-xs">
           <div>
-            <label className="block text-stone-600 font-bold uppercase tracking-wider mb-1">
+            <label className="block text-slate-700 font-bold uppercase tracking-wider mb-1.5">
               Full Name *
             </label>
             <div className="relative">
-              <User className="w-4 h-4 text-stone-400 absolute left-3.5 top-3" />
+              <User className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
               <input
                 type="text"
                 required
                 value={formData.fullName}
                 onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                 placeholder="e.g. Tariq Al-Mansoor"
-                className="w-full pl-10 pr-4 py-2.5 bg-stone-50 border border-stone-300 rounded-xl focus:outline-none focus:border-brand-emerald"
+                className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-blue-600 focus:bg-white transition text-slate-900 text-sm"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-stone-600 font-bold uppercase tracking-wider mb-1">
+            <label className="block text-slate-700 font-bold uppercase tracking-wider mb-1.5">
               Email Address *
             </label>
             <div className="relative">
-              <Mail className="w-4 h-4 text-stone-400 absolute left-3.5 top-3" />
+              <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
               <input
                 type="email"
                 required
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                placeholder="patron@example.com"
-                className="w-full pl-10 pr-4 py-2.5 bg-stone-50 border border-stone-300 rounded-xl focus:outline-none focus:border-brand-emerald"
+                placeholder="gentleman@example.com"
+                className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-blue-600 focus:bg-white transition text-slate-900 text-sm"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-stone-600 font-bold uppercase tracking-wider mb-1">
-              Mobile Number (for Delivery SMS)
+            <label className="block text-slate-700 font-bold uppercase tracking-wider mb-1.5">
+              Phone Number (for Courier Tracking)
             </label>
             <div className="relative">
-              <Phone className="w-4 h-4 text-stone-400 absolute left-3.5 top-3" />
+              <Phone className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
               <input
                 type="tel"
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                 placeholder="+91 98765 43210"
-                className="w-full pl-10 pr-4 py-2.5 bg-stone-50 border border-stone-300 rounded-xl focus:outline-none focus:border-brand-emerald"
+                className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-blue-600 focus:bg-white transition text-slate-900 text-sm"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-stone-600 font-bold uppercase tracking-wider mb-1">
+              <label className="block text-slate-700 font-bold uppercase tracking-wider mb-1.5">
                 Password *
               </label>
               <div className="relative">
-                <Lock className="w-4 h-4 text-stone-400 absolute left-3.5 top-3" />
+                <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
                 <input
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   required
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   placeholder="••••••••"
-                  className="w-full pl-10 pr-4 py-2.5 bg-stone-50 border border-stone-300 rounded-xl focus:outline-none focus:border-brand-emerald"
+                  className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-blue-600 focus:bg-white transition text-slate-900 text-sm"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-stone-600 font-bold uppercase tracking-wider mb-1">
+              <label className="block text-slate-700 font-bold uppercase tracking-wider mb-1.5">
                 Confirm *
               </label>
               <div className="relative">
-                <Lock className="w-4 h-4 text-stone-400 absolute left-3.5 top-3" />
+                <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
                 <input
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   required
                   value={formData.confirmPassword}
                   onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
                   placeholder="••••••••"
-                  className="w-full pl-10 pr-4 py-2.5 bg-stone-50 border border-stone-300 rounded-xl focus:outline-none focus:border-brand-emerald"
+                  className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-blue-600 focus:bg-white transition text-slate-900 text-sm"
                 />
               </div>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 pt-1 text-stone-600">
+          <div className="flex items-center justify-between pt-1">
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="text-slate-500 hover:text-blue-600 flex items-center gap-1.5 text-[11px]"
+            >
+              {showPassword ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+              <span>{showPassword ? 'Hide password' : 'Show password'}</span>
+            </button>
+          </div>
+
+          <div className="flex items-center gap-2 pt-1 text-slate-600">
             <input
               type="checkbox"
               id="terms"
               checked={formData.agreeTerms}
               onChange={(e) => setFormData({ ...formData, agreeTerms: e.target.checked })}
-              className="accent-brand-emerald rounded"
+              className="accent-red-600 rounded w-4 h-4"
             />
             <label htmlFor="terms" className="text-[11px]">
-              I agree to the{' '}
-              <Link to="/terms" className="text-brand-emerald underline">Terms</Link> and{' '}
-              <Link to="/privacy-policy" className="text-brand-emerald underline">Privacy Policy</Link>.
+              I accept the{' '}
+              <Link to="/terms" className="text-blue-600 underline">Terms of Service</Link> and{' '}
+              <Link to="/privacy-policy" className="text-blue-600 underline">Privacy Policy</Link>.
             </label>
           </div>
 
+          {/* Red Primary Button */}
           <button
             type="submit"
             disabled={loading || !formData.agreeTerms}
-            className="w-full py-3.5 bg-brand-emerald hover:bg-brand-dark-forest text-brand-soft-gold rounded-xl font-bold text-xs uppercase tracking-widest transition shadow-lg shadow-brand-emerald/20 flex items-center justify-center gap-2 disabled:opacity-50"
+            className="w-full py-3.5 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white rounded-xl font-bold text-xs uppercase tracking-widest transition shadow-lg shadow-red-600/30 flex items-center justify-center gap-2 disabled:opacity-50"
           >
+            <UserPlus className="w-4 h-4" />
             <span>{loading ? 'Creating Account...' : 'Complete Registration'}</span>
-            <ArrowRight className="w-4 h-4 text-brand-gold" />
           </button>
         </form>
 
-        <div className="text-center text-xs text-stone-500 pt-2 border-t border-stone-100">
-          Already have an account?{' '}
-          <Link to="/login" className="text-brand-emerald font-bold hover:underline">
-            Sign In
+        <div className="text-center text-xs text-slate-500 pt-3 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-2">
+          <span>
+            Already have an account?{' '}
+            <Link to="/login" className="text-red-600 font-bold hover:underline">
+              Sign In
+            </Link>
+          </span>
+          <Link to="/" className="text-blue-600 hover:underline">
+            Back to Boutique
           </Link>
         </div>
 
