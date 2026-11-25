@@ -48,8 +48,8 @@ export const AdminLayout = () => {
   return (
     <div className="min-h-screen bg-slate-100 flex flex-col font-sans">
       
-      {/* Top Navbar in Midnight Black & Red Accent */}
-      <header className="bg-[#070B14] text-white border-b border-blue-900/40 px-4 sm:px-6 py-3 flex items-center justify-between sticky top-0 z-30 shadow-lg">
+      {/* Top Navbar in Royal Blue & Crisp White */}
+      <header className="bg-[#0F2C59] text-white border-b border-blue-800/50 px-4 sm:px-6 py-3 flex items-center justify-between sticky top-0 z-30 shadow-lg">
         <div className="flex items-center gap-4">
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -120,7 +120,7 @@ export const AdminLayout = () => {
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition ${
                     isActive
-                      ? 'bg-[#070B14] text-white font-bold shadow-md border-l-4 border-red-600 border-r border-t border-b border-blue-900/50'
+                      ? 'bg-[#0F2C59] text-white font-bold shadow-md border-l-4 border-red-600 border-r border-t border-b border-blue-500/50'
                       : 'text-slate-300 hover:bg-blue-900/40 hover:text-white'
                   }`
                 }

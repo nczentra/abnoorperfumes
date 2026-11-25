@@ -38,7 +38,7 @@ const STORAGE_KEYS = {
   USERS: 'ab_noor_users',
 };
 
-const CURRENT_VERSION = 'v3_blue_black_theme';
+const CURRENT_VERSION = 'v4_blue_white_theme';
 
 // Seed initial data if not present or if upgrading to blue/black theme
 export const initializeDataStore = () => {
@@ -242,8 +242,8 @@ export const initializeDataStore = () => {
       codMinAmount: 999,
       codMaxAmount: 25000,
       maintenanceMode: false,
-      announcementMessage: '✨ The Royal Winter Oud Collection has arrived | Complimentary Luxury Gift Box on orders above ₹4,999',
-      announcementActive: true,
+      announcementMessage: '',
+      announcementActive: false,
     };
     localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(initialSettings));
   }

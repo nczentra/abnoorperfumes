@@ -35,7 +35,7 @@ export const Footer = () => {
   };
 
   return (
-    <footer className="bg-[#070B14] text-slate-300 pt-16 pb-8 border-t border-blue-900/40 relative overflow-hidden">
+    <footer className="bg-[#0A192F] text-slate-200 pt-16 pb-8 border-t border-blue-800/40 relative overflow-hidden">
       
       {/* Background Ornament Watermark */}
       <div className="absolute right-0 bottom-0 opacity-5 pointer-events-none transform translate-x-1/4 translate-y-1/4">
@@ -209,7 +209,7 @@ export const Footer = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="gentleman@example.com"
-                className="w-full px-3.5 py-2.5 bg-black/50 border border-blue-900/50 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-red-500 transition"
+                className="w-full px-3.5 py-2.5 bg-[#0F2C59]/80 border border-blue-500/40 rounded-xl text-xs text-white placeholder-blue-200/50 focus:outline-none focus:border-white transition"
               />
               <button
                 type="submit"

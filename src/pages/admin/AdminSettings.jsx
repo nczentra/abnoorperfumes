@@ -12,8 +12,8 @@ export const AdminSettings = () => {
     standardShippingRate: 150,
     codEnabled: true,
     maintenanceMode: false,
-    announcementMessage: '✨ The Royal Winter Oud Collection has arrived | Complimentary Luxury Gift Box on orders above ₹4,999',
-    announcementActive: true,
+    announcementMessage: '',
+    announcementActive: false,
   });
 
   const [saving, setSaving] = useState(false);

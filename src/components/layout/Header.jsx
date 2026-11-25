@@ -80,8 +80,8 @@ export const Header = () => {
       <header
         className={`sticky top-0 z-40 w-full transition-all duration-300 ${
           isScrolled
-            ? 'bg-[#070B14]/95 backdrop-blur-md shadow-2xl py-3 border-b border-blue-900/40 text-white'
-            : 'bg-[#070B14] py-4 border-b border-blue-900/30 text-white'
+            ? 'bg-[#0A192F]/95 backdrop-blur-md shadow-2xl py-3 border-b border-blue-700/50 text-white'
+            : 'bg-[#0F2C59] py-4 border-b border-blue-800/40 text-white'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -91,7 +91,7 @@ export const Header = () => {
             <div className="flex items-center gap-4">
               <button
                 onClick={() => setIsMobileMenuOpen(true)}
-                className="lg:hidden p-2 text-slate-300 hover:text-white rounded-lg transition"
+                className="lg:hidden p-2 text-blue-100 hover:text-white rounded-lg transition"
                 aria-label="Open navigation menu"
               >
                 <Menu className="w-6 h-6" />
@@ -101,7 +101,7 @@ export const Header = () => {
             </div>
 
             {/* Middle: Desktop Navigation Links */}
-            <nav className="hidden lg:flex items-center gap-6 xl:gap-8 text-xs font-semibold uppercase tracking-widest text-slate-200">
+            <nav className="hidden lg:flex items-center gap-6 xl:gap-8 text-xs font-semibold uppercase tracking-widest text-blue-100">
               {navLinks.map((link) => {
                 const isActive = location.pathname === link.path;
                 if (link.hasDropdown) {
@@ -114,8 +114,8 @@ export const Header = () => {
                     >
                       <Link
                         to={link.path}
-                        className={`flex items-center gap-1 py-2 hover:text-blue-400 transition ${
-                          isActive ? 'text-red-500 font-bold' : ''
+                        className={`flex items-center gap-1 py-2 hover:text-white transition ${
+                          isActive ? 'text-white font-bold' : 'text-blue-100'
                         }`}
                       >
                         <span>{link.name}</span>
@@ -124,17 +124,17 @@ export const Header = () => {
 
                       {/* Dropdown Menu */}
                       {isCategoryMenuOpen && (
-                        <div className="absolute top-full left-0 w-80 bg-[#0A192F] text-slate-100 rounded-2xl shadow-2xl border border-blue-600/30 p-3 space-y-1 animate-in fade-in slide-in-from-top-2 duration-200">
+                        <div className="absolute top-full left-0 w-80 bg-[#0F2C59] text-white rounded-2xl shadow-2xl border border-blue-400/40 p-3 space-y-1 animate-in fade-in slide-in-from-top-2 duration-200">
                           {categoryDropdownItems.map((item) => (
                             <Link
                               key={item.name}
                               to={item.path}
-                              className="block p-3 rounded-xl hover:bg-blue-900/50 transition group"
+                              className="block p-3 rounded-xl hover:bg-blue-800/60 transition group"
                             >
-                              <span className="font-playfair font-bold text-sm text-white group-hover:text-blue-300 block">
+                              <span className="font-playfair font-bold text-sm text-white group-hover:text-blue-200 block">
                                 {item.name}
                               </span>
-                              <span className="text-[11px] text-slate-400 font-normal leading-tight block mt-0.5">
+                              <span className="text-[11px] text-blue-200/80 font-normal leading-tight block mt-0.5">
                                 {item.desc}
                               </span>
                             </Link>
@@ -150,14 +150,14 @@ export const Header = () => {
                   <Link
                     key={link.name}
                     to={link.path}
-                    className={`py-2 flex items-center gap-1.5 hover:text-blue-400 transition relative ${
-                      isActive ? 'text-red-500 font-bold' : ''
+                    className={`py-2 flex items-center gap-1.5 hover:text-white transition relative ${
+                      isActive ? 'text-white font-bold' : 'text-blue-100'
                     }`}
                   >
-                    {Icon && <Icon className="w-3.5 h-3.5 text-blue-400" />}
+                    {Icon && <Icon className="w-3.5 h-3.5 text-blue-300" />}
                     <span>{link.name}</span>
                     {isActive && (
-                      <span className="absolute bottom-0 left-0 w-full h-0.5 bg-red-600 rounded-full" />
+                      <span className="absolute bottom-0 left-0 w-full h-0.5 bg-white rounded-full shadow-sm" />
                     )}
                   </Link>
                 );
@@ -245,7 +245,7 @@ export const Header = () => {
 
                 {/* Account Popover */}
                 {isAccountDropdownOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-72 bg-[#0A192F] text-slate-200 rounded-2xl shadow-2xl border border-blue-600/30 p-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+                  <div className="absolute right-0 top-full mt-2 w-72 bg-[#0F2C59] text-white rounded-2xl shadow-2xl border border-blue-400/40 p-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
                     {currentUser ? (
                       <div className="p-3 border-b border-white/10 mb-2">
                         <div className="flex items-center justify-between">

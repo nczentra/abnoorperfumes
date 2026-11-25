@@ -34,12 +34,12 @@ export const MobileNavDrawer = ({
     <div className="fixed inset-0 z-50 overflow-hidden lg:hidden">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-[#070B14]/80 backdrop-blur-sm transition-opacity"
+        className="absolute inset-0 bg-[#0A192F]/85 backdrop-blur-sm transition-opacity"
         onClick={onClose}
       />
 
       <div className="fixed inset-y-0 left-0 max-w-full flex pr-10">
-        <div className="w-screen max-w-xs bg-[#070B14] text-white shadow-2xl flex flex-col border-r border-blue-900/40">
+        <div className="w-screen max-w-xs bg-[#0A192F] text-white shadow-2xl flex flex-col border-r border-blue-700/50">
           
           {/* Header */}
           <div className="p-4 border-b border-white/10 flex items-center justify-between">

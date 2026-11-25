@@ -86,16 +86,16 @@ export const Home = () => {
   return (
     <div className="space-y-20 pb-20 overflow-hidden bg-white">
       
-      {/* SECTION 1: Hero Banner in Blue, Black & Red */}
-      <section className="relative min-h-[85vh] flex items-center justify-center bg-[#070B14] text-white overflow-hidden">
+      {/* SECTION 1: Hero Banner in Royal Blue & Crisp White */}
+      <section className="relative min-h-[85vh] flex items-center justify-center bg-[#0A192F] text-white overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
             src={activeHero.image}
             alt="AB Noor Perfumes Royal Men's Collection"
-            className="w-full h-full object-cover object-center scale-105 animate-pulse duration-[10000ms] opacity-40"
+            className="w-full h-full object-cover object-center scale-105 animate-pulse duration-[10000ms] opacity-35"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#070B14] via-[#070B14]/85 to-transparent" />
-          <div className="absolute inset-0 bg-blue-950/30 mix-blend-multiply" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0A192F] via-[#0F2C59]/90 to-transparent" />
+          <div className="absolute inset-0 bg-blue-900/30 mix-blend-multiply" />
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
@@ -282,14 +282,14 @@ export const Home = () => {
 
       {/* SECTION 5: Editorial Feature - The Art of Vintage Agarwood */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative rounded-3xl overflow-hidden bg-[#070B14] text-white border border-blue-900/40 p-8 sm:p-14 lg:p-16">
+        <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-[#0F2C59] via-[#0A192F] to-[#1E3A8A] text-white border border-blue-500/40 p-8 sm:p-14 lg:p-16">
           <div className="absolute right-0 top-0 bottom-0 w-full lg:w-1/2 opacity-30 lg:opacity-60 pointer-events-none">
             <img
               src="https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=1200&q=80"
               alt="Artisanal Oud"
               className="w-full h-full object-cover object-center"
             />
-            <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-[#070B14] via-[#070B14]/80 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-[#0A192F] via-[#0F2C59]/80 to-transparent" />
           </div>
 
           <div className="relative z-10 max-w-xl space-y-6">

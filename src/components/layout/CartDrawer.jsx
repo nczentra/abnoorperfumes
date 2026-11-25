@@ -34,15 +34,15 @@ export const CartDrawer = () => {
     <div className="fixed inset-0 z-50 overflow-hidden">
       {/* Backdrop */}
       <div 
-        className="absolute inset-0 bg-[#070B14]/80 backdrop-blur-sm transition-opacity"
+        className="absolute inset-0 bg-[#0A192F]/80 backdrop-blur-sm transition-opacity"
         onClick={() => setIsCartOpen(false)}
       />
 
       <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
         <div className="w-screen max-w-md bg-white shadow-2xl flex flex-col border-l border-blue-900/40">
           
-          {/* Header in Deep Black/Midnight Blue */}
-          <div className="p-5 border-b border-blue-900/40 flex items-center justify-between bg-[#070B14] text-white">
+          {/* Header in Royal Navy Blue */}
+          <div className="p-5 border-b border-blue-800/50 flex items-center justify-between bg-[#0F2C59] text-white">
             <div className="flex items-center gap-2">
               <ShoppingBag className="w-5 h-5 text-red-500" />
               <h3 className="font-playfair text-lg font-bold tracking-wide">

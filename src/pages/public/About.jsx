@@ -19,15 +19,15 @@ export const About = () => {
     <div className="space-y-20 pb-24 overflow-hidden bg-white">
       
       {/* 1. Dramatic Editorial Hero Section */}
-      <section className="relative min-h-[55vh] flex items-center justify-center bg-[#070B14] text-white overflow-hidden py-24 px-4">
+      <section className="relative min-h-[55vh] flex items-center justify-center bg-[#0A192F] text-white overflow-hidden py-24 px-4">
         <div className="absolute inset-0 z-0">
           <img
             src="https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=1920&q=90"
             alt="AB Noor Heritage"
             className="w-full h-full object-cover opacity-25"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#070B14] via-[#070B14]/80 to-transparent" />
-          <div className="absolute inset-0 bg-blue-950/40 mix-blend-multiply" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0A192F] via-[#0F2C59]/85 to-transparent" />
+          <div className="absolute inset-0 bg-blue-900/40 mix-blend-multiply" />
         </div>
 
         <div className="relative z-10 max-w-4xl mx-auto text-center space-y-5 animate-in fade-in duration-700">
@@ -112,7 +112,7 @@ export const About = () => {
               </div>
             </div>
             {/* Floating Luxury Accent */}
-            <div className="absolute -bottom-6 -left-6 bg-[#070B14] text-white p-5 rounded-2xl shadow-xl border border-blue-900/50 hidden sm:block max-w-xs">
+            <div className="absolute -bottom-6 -left-6 bg-[#0F2C59] text-white p-5 rounded-2xl shadow-xl border border-blue-400/40 hidden sm:block max-w-xs">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-red-600/20 border border-red-500 flex items-center justify-center text-red-500">
                   <Award className="w-5 h-5" />

@@ -9,8 +9,8 @@ export const MonogramLogo = ({ variant = 'dark', className = '', showTagline = t
       {/* Monogram Crest in Blue, Black, White & Red */}
       <div className={`relative flex items-center justify-center w-11 h-11 rounded-xl border transition-all duration-300 shadow-md ${
         isLight 
-          ? 'bg-[#070B14] border-blue-600/60 group-hover:border-red-500' 
-          : 'bg-[#0A192F] border-blue-600/70 group-hover:border-red-500'
+          ? 'bg-[#0A192F] border-blue-400/60 group-hover:border-white' 
+          : 'bg-[#0F2C59] border-blue-600/70 group-hover:border-blue-400'
       }`}>
         <div className="absolute inset-1 border border-blue-400/20 rounded-lg pointer-events-none" />
         <span className="font-playfair font-bold text-xl text-white tracking-tight">AB</span>

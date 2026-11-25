@@ -92,7 +92,7 @@ export const Login = () => {
         )}
 
         {/* Featured Store Admin Quick Login Card */}
-        <div className="bg-[#070B14] text-white p-4 rounded-2xl border border-blue-600/40 shadow-lg space-y-2.5">
+        <div className="bg-gradient-to-br from-[#0F2C59] to-[#0A192F] text-white p-4 rounded-2xl border border-blue-400/40 shadow-lg space-y-2.5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-blue-400">
               <ShieldCheck className="w-4 h-4 text-red-500" />
