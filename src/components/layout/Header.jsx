@@ -9,8 +9,6 @@ import { CartDrawer } from './CartDrawer';
 import { MobileNavDrawer } from './MobileNavDrawer';
 import { 
   Search, 
-  Heart, 
-  ShoppingBag, 
   Menu, 
   ChevronDown, 
   Compass,
@@ -186,36 +184,6 @@ export const Header = () => {
                 aria-label="Search"
               >
                 <Search className="w-5 h-5" />
-              </button>
-
-              {/* Wishlist */}
-              <Link
-                to="/account/wishlist"
-                className="p-2 text-blue-100 hover:text-white hover:bg-white/10 rounded-xl transition relative"
-                title="Wishlist"
-                aria-label="Wishlist"
-              >
-                <Heart className="w-5 h-5" />
-                {wishlistCount > 0 && (
-                  <span className="absolute top-1 right-1 bg-red-600 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
-                    {wishlistCount}
-                  </span>
-                )}
-              </Link>
-
-              {/* Shopping Bag with red count badge */}
-              <button
-                onClick={() => setIsCartOpen(true)}
-                className="p-2 text-blue-100 hover:text-white hover:bg-white/10 rounded-xl transition relative"
-                title="Shopping Bag"
-                aria-label="Shopping bag"
-              >
-                <ShoppingBag className="w-5 h-5" />
-                {totalItemCount > 0 && (
-                  <span className="absolute top-1 right-1 bg-red-600 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-md shadow-red-600/40">
-                    {totalItemCount}
-                  </span>
-                )}
               </button>
 
               {/* Sleek 1-Click Sign In / Admin Link */}

@@ -1,0 +1,8 @@
+name = "abnoor-email-worker"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+[vars]
+RESEND_API_KEY = "re_W74ruDJ1_Bg85A7cnQ4hfYbQxPueDKHwT"
+RESEND_FROM_EMAIL = "AB Noor Perfumes <onboarding@resend.dev>"
+ADMIN_EMAIL = "abnoorperfumes@gmail.com"
