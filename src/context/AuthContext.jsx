@@ -275,16 +275,16 @@ export const AuthProvider = ({ children }) => {
     const newRole = userProfile?.role === 'super_admin' ? 'customer' : 'super_admin';
     const updated = {
       ...(userProfile || {
-        uid: 'usr-admin-demo',
-        fullName: 'Master Perfumer & Store Admin',
-        email: 'admin@abnoorperfumes.com',
+        uid: 'usr-admin-master',
+        fullName: 'AB Noor Master Perfumer & Store Admin',
+        email: 'abnoorperfumes@gmail.com',
       }),
       role: newRole,
     };
     saveLocalUser(updated);
   };
 
-  const isAdmin = userProfile?.role === 'super_admin' || userProfile?.role === 'store_manager';
+  const isAdmin = userProfile?.role === 'super_admin' || userProfile?.role === 'store_manager' || checkIsAdmin(currentUser?.email) || checkIsAdmin(userProfile?.email);
 
   const value = {
     currentUser,

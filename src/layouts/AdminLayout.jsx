@@ -8,14 +8,12 @@ import {
   Tags, 
   Crown, 
   ShoppingBag, 
-  Users, 
   Boxes, 
   TicketPercent, 
   Star, 
   Image, 
   BarChart3, 
   Settings, 
-  ArrowLeft, 
   LogOut, 
   Menu, 
   X, 
@@ -48,20 +46,20 @@ export const AdminLayout = () => {
   };
 
   return (
-    <div className="min-h-screen bg-stone-100 flex flex-col">
+    <div className="min-h-screen bg-slate-100 flex flex-col font-sans">
       
-      {/* Top Navbar */}
-      <header className="bg-brand-dark-forest text-white border-b border-brand-gold/30 px-4 sm:px-6 py-3 flex items-center justify-between sticky top-0 z-30 shadow-md">
+      {/* Top Navbar in Midnight Black & Red Accent */}
+      <header className="bg-[#070B14] text-white border-b border-blue-900/40 px-4 sm:px-6 py-3 flex items-center justify-between sticky top-0 z-30 shadow-lg">
         <div className="flex items-center gap-4">
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="lg:hidden p-1.5 text-stone-300 hover:text-white rounded-lg hover:bg-white/10"
+            className="lg:hidden p-1.5 text-slate-300 hover:text-white rounded-lg hover:bg-white/10"
           >
             {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
           <MonogramLogo variant="light" showTagline={false} />
-          <span className="hidden sm:inline-block px-2.5 py-0.5 rounded-full bg-brand-gold text-brand-dark-forest font-bold text-[10px] uppercase tracking-wider ml-2">
-            Store Administration
+          <span className="hidden sm:inline-block px-2.5 py-0.5 rounded-full bg-red-600 text-white font-bold text-[10px] uppercase tracking-wider ml-2 shadow-sm">
+            Master Store Administration
           </span>
         </div>
 
@@ -69,7 +67,7 @@ export const AdminLayout = () => {
           <Link
             to="/"
             target="_blank"
-            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-white/10 hover:bg-white/20 text-brand-soft-gold rounded-lg transition"
+            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-blue-900/40 hover:bg-blue-900/70 text-blue-200 border border-blue-500/30 rounded-lg transition"
             title="View Public Storefront in new tab"
           >
             <span>Live Boutique</span>
@@ -78,21 +76,21 @@ export const AdminLayout = () => {
 
           <button
             onClick={toggleRole}
-            className="text-[10px] text-stone-300 hover:text-brand-gold underline hidden sm:inline"
+            className="text-[10px] text-slate-400 hover:text-blue-300 underline hidden sm:inline"
           >
-            Switch to Customer View
+            Switch View
           </button>
 
           <div className="flex items-center gap-2 pl-3 border-l border-white/20">
             <div className="text-right hidden md:block">
-              <strong className="text-white block font-semibold leading-tight">
-                {userProfile?.fullName || 'Master Administrator'}
+              <strong className="text-white block font-semibold leading-tight text-xs">
+                {userProfile?.fullName || 'AB Noor Admin'}
               </strong>
-              <span className="text-[10px] text-brand-soft-gold">Super Admin</span>
+              <span className="text-[10px] text-blue-300 font-mono">abnoorperfumes@gmail.com</span>
             </div>
             <button
               onClick={handleLogout}
-              className="p-1.5 text-stone-300 hover:text-rose-400 rounded-lg hover:bg-white/10 transition"
+              className="p-1.5 text-slate-400 hover:text-red-400 rounded-lg hover:bg-white/10 transition"
               title="Logout"
             >
               <LogOut className="w-4 h-4" />
@@ -103,14 +101,14 @@ export const AdminLayout = () => {
 
       <div className="flex-1 flex overflow-hidden">
         
-        {/* Sidebar Nav */}
+        {/* Sidebar Nav in Deep Midnight Navy */}
         <aside
-          className={`fixed lg:static inset-y-0 left-0 z-20 w-64 bg-brand-emerald text-white flex flex-col justify-between border-r border-brand-gold/20 transform transition-transform duration-200 ease-in-out lg:translate-x-0 ${
+          className={`fixed lg:static inset-y-0 left-0 z-20 w-64 bg-[#0A192F] text-white flex flex-col justify-between border-r border-blue-900/40 transform transition-transform duration-200 ease-in-out lg:translate-x-0 ${
             sidebarOpen ? 'translate-x-0 top-14' : '-translate-x-full lg:translate-x-0'
           }`}
         >
           <div className="p-4 space-y-1 overflow-y-auto">
-            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-gold block px-3 py-2">
+            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-blue-400 block px-3 py-2">
               Management Modules
             </span>
 
@@ -122,18 +120,18 @@ export const AdminLayout = () => {
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition ${
                     isActive
-                      ? 'bg-brand-dark-forest text-brand-soft-gold font-bold shadow-sm border border-brand-gold/40'
-                      : 'text-stone-200 hover:bg-brand-dark-forest/50 hover:text-white'
+                      ? 'bg-[#070B14] text-white font-bold shadow-md border-l-4 border-red-600 border-r border-t border-b border-blue-900/50'
+                      : 'text-slate-300 hover:bg-blue-900/40 hover:text-white'
                   }`
                 }
               >
-                <item.icon className="w-4 h-4 text-brand-gold shrink-0" />
+                <item.icon className="w-4 h-4 text-blue-400 shrink-0" />
                 <span>{item.name}</span>
               </NavLink>
             ))}
           </div>
 
-          <div className="p-4 border-t border-white/10 text-[11px] text-brand-soft-gold/70 text-center">
+          <div className="p-4 border-t border-white/10 text-[11px] text-slate-400 text-center">
             AB Noor Fragrance Engine v1.0.0
           </div>
         </aside>

@@ -320,10 +320,10 @@ export const Checkout = () => {
 
                 <button
                   type="submit"
-                  className="w-full py-4 bg-brand-emerald hover:bg-brand-dark-forest text-brand-soft-gold rounded-xl font-bold uppercase tracking-widest transition shadow-lg flex items-center justify-center gap-2 mt-4"
+                  className="w-full py-4 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white rounded-xl font-bold uppercase tracking-widest transition shadow-lg shadow-red-600/30 flex items-center justify-center gap-2 mt-4"
                 >
                   <span>Continue to Payment Method</span>
-                  <ArrowRight className="w-4 h-4 text-brand-gold" />
+                  <ArrowRight className="w-4 h-4" />
                 </button>
               </form>
             </div>
@@ -415,10 +415,10 @@ export const Checkout = () => {
                 <button
                   type="button"
                   onClick={() => setStep(3)}
-                  className="flex-1 py-3.5 bg-brand-emerald hover:bg-brand-dark-forest text-brand-soft-gold rounded-xl font-bold text-xs uppercase tracking-widest transition shadow-lg flex items-center justify-center gap-2"
+                  className="flex-1 py-3.5 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white rounded-xl font-bold text-xs uppercase tracking-widest transition shadow-lg shadow-red-600/30 flex items-center justify-center gap-2"
                 >
                   <span>Review Order</span>
-                  <ArrowRight className="w-4 h-4 text-brand-gold" />
+                  <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
             </div>
@@ -459,11 +459,11 @@ export const Checkout = () => {
                 </div>
               </div>
 
-              {/* Confirmation Button */}
+              {/* Confirmation Button with Vibrant Red CTA */}
               <button
                 onClick={handlePlaceOrder}
                 disabled={loading}
-                className="w-full py-4 bg-brand-gold hover:bg-brand-soft-gold text-brand-dark-forest rounded-xl font-bold text-xs uppercase tracking-widest transition shadow-xl flex items-center justify-center gap-2 disabled:opacity-50"
+                className="w-full py-4 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white rounded-xl font-bold text-xs uppercase tracking-widest transition shadow-xl shadow-red-600/30 flex items-center justify-center gap-2 disabled:opacity-50"
               >
                 <Lock className="w-4 h-4" />
                 <span>{loading ? 'Processing Royal Order...' : `Confirm & Pay ₹${totalAmount.toLocaleString('en-IN')}`}</span>

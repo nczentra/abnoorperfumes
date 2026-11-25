@@ -17,7 +17,9 @@ import {
   Quote,
   Instagram,
   CheckCircle2,
-  Compass
+  Compass,
+  Flame,
+  Award
 } from 'lucide-react';
 
 export const Home = () => {
@@ -32,6 +34,7 @@ export const Home = () => {
   const [profileTabProducts, setProfileTabProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Dynamic content loaded from Firestore (maintained by admin)
   useEffect(() => {
     const loadHomeData = async () => {
       setLoading(true);
@@ -61,7 +64,7 @@ export const Home = () => {
     loadHomeData();
   }, []);
 
-  // Filter profile tab products
+  // Filter profile tab products dynamically
   useEffect(() => {
     const familyQuery = 
       activeProfileTab === 'smoky' ? 'leather' :
@@ -73,75 +76,78 @@ export const Home = () => {
   }, [activeProfileTab]);
 
   const activeHero = banners[0] || {
-    title: 'Discover the Art of Masculine Fragrance',
+    title: 'The Essence of Masculine Elegance',
     subtitle: 'AB NOOR POUR HOMME',
-    description: 'Explore an exclusive collection of commanding, luxurious fragrances crafted for the modern gentleman. Rare Cambodian agarwood, cordovan leather, and royal attars.',
+    description: 'Explore an exclusive collection of commanding, luxurious fragrances crafted for the modern gentleman. Rare vintage agarwood, cordovan leather, and royal attars.',
     image: 'https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=1920&q=90',
     badge: 'ROYAL MASCULINE PRESTIGE',
   };
 
   return (
-    <div className="space-y-20 pb-20 overflow-hidden">
+    <div className="space-y-20 pb-20 overflow-hidden bg-white">
       
-      {/* SECTION 3: Hero Banner */}
-      <section className="relative min-h-[85vh] flex items-center justify-center bg-brand-dark-forest text-white overflow-hidden">
+      {/* SECTION 1: Hero Banner in Blue, Black & Red */}
+      <section className="relative min-h-[85vh] flex items-center justify-center bg-[#070B14] text-white overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
             src={activeHero.image}
             alt="AB Noor Perfumes Royal Men's Collection"
-            className="w-full h-full object-cover object-center scale-105 animate-pulse duration-[10000ms]"
+            className="w-full h-full object-cover object-center scale-105 animate-pulse duration-[10000ms] opacity-40"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-brand-dark-forest/95 via-brand-dark-forest/80 to-transparent" />
-          <div className="absolute inset-0 bg-brand-emerald/30 mix-blend-multiply" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#070B14] via-[#070B14]/85 to-transparent" />
+          <div className="absolute inset-0 bg-blue-950/30 mix-blend-multiply" />
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
           <div className="max-w-2xl space-y-6 animate-in fade-in slide-in-from-left duration-700">
             
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-brand-gold/40 backdrop-blur-md">
-              <Crown className="w-4 h-4 text-brand-gold" />
-              <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-brand-soft-gold">
-                {activeHero.badge || 'THE ESSENCE OF MASCULINE ELEGANCE'}
-              </span>
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-950/80 border border-blue-500/40 text-blue-300 text-[10px] font-bold tracking-[0.25em] uppercase">
+              <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse" />
+              <span>{activeHero.badge || 'ROYAL MASCULINE PRESTIGE'}</span>
             </div>
 
-            <h1 className="font-playfair text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.1] tracking-tight">
-              The Essence of <span className="gold-shimmer font-serif italic">Masculine Elegance</span>
+            {/* Headline */}
+            <h1 className="font-playfair text-4xl sm:text-6xl font-bold tracking-tight text-white leading-[1.1]">
+              {activeHero.title}
             </h1>
 
-            <p className="text-sm sm:text-base text-stone-300 leading-relaxed max-w-xl font-light">
-              Explore an exclusive collection of commanding, luxurious fragrances crafted for the modern gentleman. Rare Cambodian agarwood, cordovan leather, dark Cuban tobacco, and opulent attars distilled for executive presence.
+            {/* Subtitle / Description */}
+            <p className="text-sm sm:text-base text-slate-300 font-light leading-relaxed max-w-xl">
+              {activeHero.description}
             </p>
 
-            <div className="flex flex-wrap items-center gap-4 pt-4">
+            {/* Action Buttons with Vibrant Red CTA */}
+            <div className="pt-4 flex flex-wrap items-center gap-4">
               <Link
                 to="/shop"
-                className="px-8 py-4 bg-brand-gold hover:bg-brand-soft-gold text-brand-dark-forest font-bold text-xs uppercase tracking-[0.2em] rounded-xl shadow-xl shadow-brand-gold/20 transition-all hover:scale-105 flex items-center gap-2 group"
+                className="px-8 py-4 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white rounded-xl font-bold text-xs uppercase tracking-widest transition shadow-xl shadow-red-600/30 flex items-center gap-2"
               >
-                <span>Explore Men's Collection</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                <span>Explore The Collection</span>
+                <ArrowRight className="w-4 h-4" />
               </Link>
 
               <Link
-                to="/best-sellers"
-                className="px-8 py-4 bg-white/10 hover:bg-white/20 text-brand-soft-gold border border-brand-gold/40 font-semibold text-xs uppercase tracking-[0.2em] rounded-xl backdrop-blur-sm transition-all hover:border-brand-gold"
+                to="/about"
+                className="px-8 py-4 bg-blue-950/60 hover:bg-blue-900/60 border border-blue-500/40 text-blue-200 rounded-xl font-bold text-xs uppercase tracking-widest transition backdrop-blur-sm"
               >
-                Gentlemen's Best Sellers
+                Our Heritage
               </Link>
             </div>
 
-            <div className="pt-8 border-t border-white/10 flex flex-wrap gap-6 text-xs text-stone-300">
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-brand-gold" />
-                <span>100% Authentic Aged Ouds</span>
+            {/* Trust Pill Highlights */}
+            <div className="pt-8 border-t border-white/10 grid grid-cols-3 gap-4 text-slate-400 text-xs">
+              <div>
+                <span className="font-playfair font-bold text-base text-white block">25 Years</span>
+                <span className="text-[11px]">Aged Agarwoods</span>
               </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-brand-gold" />
-                <span>Alcohol-Free Pure Men's Attars</span>
+              <div>
+                <span className="font-playfair font-bold text-base text-white block">40% Extrait</span>
+                <span className="text-[11px]">High Concentration</span>
               </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-brand-gold" />
-                <span>Complimentary Delivery Above ₹2,499</span>
+              <div>
+                <span className="font-playfair font-bold text-base text-white block">100% Uncut</span>
+                <span className="text-[11px]">Artisanal Pure Attars</span>
               </div>
             </div>
 
@@ -149,248 +155,180 @@ export const Home = () => {
         </div>
       </section>
 
-      {/* SECTION 4: Shop by Category */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-12">
-          <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-brand-gold">
-            Gentlemen's Olfactory Realms
-          </span>
-          <h2 className="font-playfair text-3xl sm:text-4xl font-bold text-brand-emerald mt-2">
-            Curated Men's Categories
-          </h2>
-          <p className="text-xs sm:text-sm text-brand-muted-grey mt-2">
-            From vintage Cambodian agarwood distillations to cordovan saddle leather and boardroom citrus woods.
-          </p>
+      {/* SECTION 2: Shop by Curated Men's Categories (Maintained by Admin) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+          <div>
+            <span className="text-xs font-bold uppercase tracking-widest text-red-600 block mb-1">
+              CURATED MASCULINE REALMS
+            </span>
+            <h2 className="font-playfair text-3xl font-bold text-slate-900">
+              Shop by Fragrance Realm
+            </h2>
+          </div>
+          <Link
+            to="/shop"
+            className="text-xs font-bold text-blue-600 hover:text-red-600 flex items-center gap-1 uppercase tracking-wider transition"
+          >
+            <span>View All Categories</span>
+            <ChevronRight className="w-4 h-4" />
+          </Link>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-          {categories.map((cat) => (
+          {categories.slice(0, 8).map((cat) => (
             <Link
               key={cat.id}
-              to={`/category/${cat.slug}`}
-              className="group relative aspect-[3/4] rounded-2xl overflow-hidden shadow-md hover:shadow-luxury transition-all duration-500 border border-stone-200"
+              to={`/category/${cat.slug || cat.id}`}
+              className="group relative rounded-2xl overflow-hidden aspect-[3/4] bg-slate-900 border border-slate-200 shadow-sm hover:shadow-xl hover:border-blue-500/50 transition duration-300"
             >
               <img
                 src={cat.image}
                 alt={cat.name}
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80 group-hover:opacity-100"
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-brand-dark-forest/90 via-brand-dark-forest/30 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
               
-              <div className="absolute bottom-0 inset-x-0 p-4 sm:p-5 flex flex-col justify-end">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-brand-gold mb-1">
-                  Gentlemen's Realm
+              <div className="absolute bottom-4 left-4 right-4 text-white space-y-1">
+                <span className="text-[10px] uppercase tracking-widest text-blue-400 font-bold block">
+                  Masculine Collection
                 </span>
-                <h3 className="font-playfair font-bold text-lg sm:text-xl text-white group-hover:text-brand-soft-gold transition">
+                <h4 className="font-playfair text-lg font-bold group-hover:text-red-400 transition">
                   {cat.name}
-                </h3>
-                <div className="flex items-center gap-1 text-[11px] text-stone-300 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <span>Explore Scents</span>
-                  <ChevronRight className="w-3.5 h-3.5 text-brand-gold" />
-                </div>
+                </h4>
+                <p className="text-[11px] text-slate-300 line-clamp-1 font-light">
+                  {cat.description}
+                </p>
               </div>
             </Link>
           ))}
         </div>
       </section>
 
-      {/* SECTION 5: Featured Products */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 pb-4 border-b border-stone-200">
+      {/* SECTION 3: Bestselling Flacons (Maintained by Admin) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div>
-            <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-brand-gold">
-              Masterpiece Formulations
-            </span>
-            <h2 className="font-playfair text-3xl font-bold text-brand-emerald mt-1">
-              Featured Fragrances Pour Homme
+            <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-red-600 mb-1">
+              <Crown className="w-3.5 h-3.5" />
+              <span>THE SOVEREIGN HALL</span>
+            </div>
+            <h2 className="font-playfair text-3xl font-bold text-slate-900">
+              Gentlemen’s Best Sellers
             </h2>
           </div>
           <Link
-            to="/shop"
-            className="text-xs font-bold uppercase tracking-wider text-brand-emerald hover:text-brand-gold flex items-center gap-1 mt-3 sm:mt-0 transition"
+            to="/shop?sort=popularity"
+            className="text-xs font-bold text-blue-600 hover:text-red-600 flex items-center gap-1 uppercase tracking-wider transition"
           >
-            <span>View Full Men's Catalogue</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {featuredProducts.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              onQuickView={(p) => setQuickViewProduct(p)}
-            />
-          ))}
-        </div>
-      </section>
-
-      {/* SECTION 8: Royal Oud & Smoked Leather Spotlight */}
-      <section className="bg-brand-dark-forest py-20 text-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10 pointer-events-none">
-          <div className="w-full h-full bg-[radial-gradient(#C6A15B_1px,transparent_1px)] [background-size:20px_20px]" />
-        </div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            
-            <div className="space-y-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-emerald border border-brand-gold/40 text-brand-gold text-[10px] font-bold tracking-[0.2em] uppercase">
-                <Droplet className="w-3.5 h-3.5 text-brand-gold" />
-                <span>COMMANDING OLFACTORY PRESENCE</span>
-              </div>
-
-              <h2 className="font-playfair text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight">
-                Smoked Leather, Cuban Tobacco & <span className="gold-shimmer italic">Aged Agarwood</span>
-              </h2>
-
-              <p className="text-sm text-stone-300 leading-relaxed font-light">
-                True authority does not demand attention; it quietly commands the room. We forge fragrances for the leader who understands the power of presence. Sourced from 25-year aged Cambodian agarwood and Cordovan saddle leathers.
-              </p>
-
-              <div className="grid grid-cols-2 gap-4 py-4 border-y border-white/10 text-xs">
-                <div>
-                  <strong className="block text-brand-gold font-playfair text-xl mb-1">35% - 40% Oil</strong>
-                  <span className="text-stone-400">Private Reserve Extrait de Parfum</span>
-                </div>
-                <div>
-                  <strong className="block text-brand-gold font-playfair text-xl mb-1">24+ Hour Sillage</strong>
-                  <span className="text-stone-400">Unrivalled projection on skin & wool</span>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4 pt-2">
-                <Link
-                  to="/category/leather"
-                  className="px-6 py-3.5 bg-brand-gold hover:bg-brand-soft-gold text-brand-dark-forest font-bold text-xs uppercase tracking-widest rounded-xl transition shadow-lg"
-                >
-                  Explore Leather & Tobacco Scents
-                </Link>
-                <Link
-                  to="/about"
-                  className="text-xs font-semibold text-brand-soft-gold hover:underline"
-                >
-                  Our Distillation Heritage →
-                </Link>
-              </div>
-            </div>
-
-            <div className="relative">
-              <div className="aspect-[4/5] rounded-2xl overflow-hidden border-2 border-brand-gold/40 shadow-2xl">
-                <img
-                  src="https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=1000&q=85"
-                  alt="Men's Luxury Perfumery Heritage"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="absolute -bottom-6 -left-6 bg-brand-emerald p-6 rounded-2xl border border-brand-gold/50 shadow-2xl max-w-xs hidden sm:block">
-                <span className="text-brand-gold text-[10px] font-bold tracking-widest uppercase block mb-1">
-                  Gentlemen's Standard
-                </span>
-                <p className="text-xs text-stone-200">
-                  "Every flacon sealed with our monogram represents the pinnacle of masculine Arabian luxury."
-                </p>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 6: Best Sellers */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 pb-4 border-b border-stone-200">
-          <div>
-            <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-brand-gold">
-              Gentlemen's Signature Scents
-            </span>
-            <h2 className="font-playfair text-3xl font-bold text-brand-emerald mt-1">
-              Best Sellers Pour Homme
-            </h2>
-          </div>
-          <Link
-            to="/best-sellers"
-            className="text-xs font-bold uppercase tracking-wider text-brand-emerald hover:text-brand-gold flex items-center gap-1 mt-3 sm:mt-0 transition"
-          >
-            <span>View All Best Sellers</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <span>Explore All Best Sellers</span>
+            <ChevronRight className="w-4 h-4" />
           </Link>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {bestSellers.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              onQuickView={(p) => setQuickViewProduct(p)}
-            />
+            <ProductCard key={product.id} product={product} onQuickView={setQuickViewProduct} />
           ))}
         </div>
       </section>
 
-      {/* SECTIONS 9, 10, 11: Curated Profile Tabs */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-xl mx-auto mb-8">
-          <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-brand-gold">
-            Bespoke Masculine Notes
-          </span>
-          <h2 className="font-playfair text-3xl font-bold text-brand-emerald mt-1">
-            Curated Scent Profiles
-          </h2>
+      {/* SECTION 4: Olfactory Profile Showcase (Tabs) */}
+      <section className="bg-slate-50 py-16 border-y border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+          
+          <div className="text-center max-w-xl mx-auto space-y-3">
+            <span className="text-xs font-bold uppercase tracking-widest text-red-600 block">
+              TARGETED AROMATIC CHARACTERS
+            </span>
+            <h3 className="font-playfair text-3xl font-bold text-slate-900">
+              Choose Your Signature Presence
+            </h3>
+            <p className="text-xs text-slate-500">
+              Select your desired olfactory character to discover precision formulations curated for distinct gentleman styles.
+            </p>
 
-          <div className="flex justify-center gap-2 mt-6 p-1 bg-stone-100 rounded-xl max-w-md mx-auto border border-stone-200">
-            {[
-              { id: 'smoky', label: 'Commanding & Smoky' },
-              { id: 'amber', label: 'Dark Amber & Spice' },
-              { id: 'fresh', label: 'Fresh & Boardroom' },
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveProfileTab(tab.id)}
-                className={`flex-1 py-2 text-xs font-bold uppercase tracking-wider rounded-lg transition ${
-                  activeProfileTab === tab.id
-                    ? 'bg-brand-emerald text-brand-soft-gold shadow-sm'
-                    : 'text-stone-600 hover:text-brand-emerald'
-                }`}
-              >
-                {tab.label}
-              </button>
+            {/* Profile Tabs */}
+            <div className="flex justify-center gap-2 pt-4">
+              {[
+                { id: 'smoky', label: 'Commanding & Smoky' },
+                { id: 'amber', label: 'Dark Amber & Spice' },
+                { id: 'fresh', label: 'Fresh & Boardroom' },
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveProfileTab(tab.id)}
+                  className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition ${
+                    activeProfileTab === tab.id
+                      ? 'bg-red-600 text-white shadow-md shadow-red-600/30'
+                      : 'bg-white border border-slate-200 text-slate-600 hover:border-blue-500'
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {profileTabProducts.map((p) => (
+              <ProductCard key={p.id} product={p} onQuickView={setQuickViewProduct} />
             ))}
           </div>
-        </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {profileTabProducts.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              onQuickView={(p) => setQuickViewProduct(p)}
-            />
-          ))}
         </div>
       </section>
 
-      {/* Scent Finder Quiz CTA */}
+      {/* SECTION 5: Editorial Feature - The Art of Vintage Agarwood */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-r from-brand-dark-forest via-brand-emerald to-brand-dark-forest rounded-3xl p-8 sm:p-12 text-white border border-brand-gold/40 shadow-2xl relative overflow-hidden">
-          <div className="relative z-10 max-w-xl space-y-4">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-brand-gold text-[10px] font-bold tracking-widest uppercase">
-              <Compass className="w-3.5 h-3.5" />
-              <span>GENTLEMAN'S SCENT CONSULTATION</span>
+        <div className="relative rounded-3xl overflow-hidden bg-[#070B14] text-white border border-blue-900/40 p-8 sm:p-14 lg:p-16">
+          <div className="absolute right-0 top-0 bottom-0 w-full lg:w-1/2 opacity-30 lg:opacity-60 pointer-events-none">
+            <img
+              src="https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=1200&q=80"
+              alt="Artisanal Oud"
+              className="w-full h-full object-cover object-center"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-[#070B14] via-[#070B14]/80 to-transparent" />
+          </div>
+
+          <div className="relative z-10 max-w-xl space-y-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-950 border border-blue-500/40 text-blue-300 text-[10px] font-bold uppercase tracking-widest">
+              <Award className="w-3.5 h-3.5 text-red-500" />
+              <span>THE SOVEREIGN EXTRAIT RESERVE</span>
             </div>
-            <h3 className="font-playfair text-2xl sm:text-3xl font-bold">
-              Unsure which fragrance fits your signature style?
-            </h3>
-            <p className="text-xs sm:text-sm text-stone-300 font-light leading-relaxed">
-              Take our interactive 60-second consultation. Match your presence—whether boardroom leadership, black-tie galas, or weekend leisure—with the ideal flacon.
+
+            <h2 className="font-playfair text-3xl sm:text-5xl font-bold leading-tight">
+              Sultanate Dehn Al Oud Royale
+            </h2>
+
+            <p className="text-xs sm:text-sm text-slate-300 font-light leading-relaxed">
+              Distilled in 1999 from heartwood Aquilaria trees in Koh Kong, Cambodia. Matured in our subterranean climate vaults. A commanding symphony of smoked balsamic resins, bitter cocoa, and dark ocean ambergris.
             </p>
-            <div className="pt-2">
+
+            <div className="flex flex-wrap items-center gap-6 pt-2">
+              <div>
+                <span className="text-xs text-slate-400 uppercase tracking-widest block font-medium">Concentration</span>
+                <span className="font-bold text-white text-sm">40% Pure Extrait</span>
+              </div>
+              <div className="h-8 w-px bg-white/20" />
+              <div>
+                <span className="text-xs text-slate-400 uppercase tracking-widest block font-medium">Longevity</span>
+                <span className="font-bold text-white text-sm">26+ Hours on Skin</span>
+              </div>
+              <div className="h-8 w-px bg-white/20" />
+              <div>
+                <span className="text-xs text-slate-400 uppercase tracking-widest block font-medium">Vintage</span>
+                <span className="font-bold text-red-400 text-sm">1999 Reserve</span>
+              </div>
+            </div>
+
+            <div className="pt-4">
               <Link
-                to="/fragrance-finder"
-                className="inline-flex items-center gap-2 px-6 py-3.5 bg-brand-gold hover:bg-brand-soft-gold text-brand-dark-forest font-bold text-xs uppercase tracking-widest rounded-xl transition shadow-lg"
+                to="/product/sultanate-dehn-al-oud-royale"
+                className="inline-flex items-center gap-2 px-8 py-3.5 bg-red-600 hover:bg-red-700 text-white rounded-xl font-bold text-xs uppercase tracking-widest transition shadow-lg shadow-red-600/30"
               >
-                <span>Launch Scent Finder</span>
+                <span>Acquire Flacon</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
@@ -398,54 +336,159 @@ export const Home = () => {
         </div>
       </section>
 
-      {/* Customer Testimonials */}
-      {testimonials.length > 0 && (
-        <section className="bg-stone-50 py-16 border-y border-stone-200">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-xl mx-auto mb-10">
-              <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-brand-gold">
-                Verified Gentlemen Experiences
-              </span>
-              <h2 className="font-playfair text-3xl font-bold text-brand-emerald mt-1">
-                Words of Elegance
-              </h2>
-            </div>
+      {/* SECTION 6: New Arrivals (Maintained by Admin) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+          <div>
+            <span className="text-xs font-bold uppercase tracking-widest text-red-600 block mb-1">
+              FRESH FORMULATIONS
+            </span>
+            <h2 className="font-playfair text-3xl font-bold text-slate-900">
+              New Master Arrivals
+            </h2>
+          </div>
+          <Link
+            to="/shop?sort=newest"
+            className="text-xs font-bold text-blue-600 hover:text-red-600 flex items-center gap-1 uppercase tracking-wider transition"
+          >
+            <span>View All New Releases</span>
+            <ChevronRight className="w-4 h-4" />
+          </Link>
+        </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {testimonials.map((t) => (
-                <div key={t.id} className="p-6 rounded-2xl bg-white border border-stone-200 shadow-sm flex flex-col justify-between">
-                  <div>
-                    <Quote className="w-6 h-6 text-brand-gold/40 mb-3" />
-                    <h5 className="font-playfair font-bold text-sm text-brand-emerald mb-2">
-                      "{t.title}"
-                    </h5>
-                    <p className="text-xs text-stone-600 leading-relaxed italic">
-                      "{t.comment}"
-                    </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {newArrivals.map((product) => (
+            <ProductCard key={product.id} product={product} onQuickView={setQuickViewProduct} />
+          ))}
+        </div>
+      </section>
+
+      {/* SECTION 7: Approved Customer Reviews & Testimonials (Maintained by Admin) */}
+      <section className="bg-slate-50 py-16 border-y border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+          
+          <div className="text-center max-w-xl mx-auto space-y-2">
+            <span className="text-xs font-bold uppercase tracking-widest text-red-600 block">
+              PATRON TESTIMONIALS
+            </span>
+            <h3 className="font-playfair text-3xl font-bold text-slate-900">
+              Echoes of Distinction
+            </h3>
+            <p className="text-xs text-slate-500">
+              Verified experiences from dignitaries, connoisseurs, and gentlemen wearing AB Noor.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {testimonials.map((review) => (
+              <div
+                key={review.id}
+                className="p-8 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-4 relative flex flex-col justify-between"
+              >
+                <div className="space-y-3">
+                  <div className="flex items-center gap-1 text-amber-400">
+                    {'★'.repeat(review.rating || 5)}
                   </div>
-                  <div className="pt-4 mt-4 border-t border-stone-100 flex items-center justify-between text-xs">
-                    <div>
-                      <strong className="text-stone-800 block font-semibold">{t.userName}</strong>
-                      <span className="text-[10px] text-brand-gold">{t.productName}</span>
-                    </div>
-                    {t.verifiedPurchase && (
-                      <span className="text-[10px] px-2 py-0.5 bg-emerald-50 text-emerald-800 rounded font-medium">
-                        Verified Patron
-                      </span>
-                    )}
-                  </div>
+                  <h4 className="font-playfair font-bold text-base text-slate-900">
+                    "{review.title}"
+                  </h4>
+                  <p className="text-xs text-slate-600 leading-relaxed font-light italic">
+                    {review.comment}
+                  </p>
                 </div>
-              ))}
+
+                <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+                  <div>
+                    <span className="font-bold text-slate-900 block">{review.userName}</span>
+                    <span className="text-[11px] text-blue-600">{review.productName}</span>
+                  </div>
+                  {review.verifiedPurchase && (
+                    <span className="flex items-center gap-1 text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">
+                      <CheckCircle2 className="w-3 h-3" />
+                      <span>Verified</span>
+                    </span>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </section>
+
+      {/* SECTION 8: Four Guarantees */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="p-6 bg-white rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
+            <div className="p-3 rounded-xl bg-blue-50 text-blue-600 shrink-0">
+              <Droplet className="w-6 h-6" />
+            </div>
+            <div className="space-y-1">
+              <h5 className="font-bold text-sm text-slate-900">Aged Extraits</h5>
+              <p className="text-xs text-slate-500 font-light">35-40% oil concentration for intense 24hr projection.</p>
             </div>
           </div>
-        </section>
-      )}
+
+          <div className="p-6 bg-white rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
+            <div className="p-3 rounded-xl bg-blue-50 text-blue-600 shrink-0">
+              <Truck className="w-6 h-6" />
+            </div>
+            <div className="space-y-1">
+              <h5 className="font-bold text-sm text-slate-900">Express Delivery</h5>
+              <p className="text-xs text-slate-500 font-light">Insured priority dispatch across all Indian metro cities.</p>
+            </div>
+          </div>
+
+          <div className="p-6 bg-white rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
+            <div className="p-3 rounded-xl bg-blue-50 text-blue-600 shrink-0">
+              <ShieldCheck className="w-6 h-6" />
+            </div>
+            <div className="space-y-1">
+              <h5 className="font-bold text-sm text-slate-900">Signed Authenticity</h5>
+              <p className="text-xs text-slate-500 font-light">Hand-numbered bottles with wax-sealed batch certificates.</p>
+            </div>
+          </div>
+
+          <div className="p-6 bg-white rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
+            <div className="p-3 rounded-xl bg-red-50 text-red-600 shrink-0">
+              <Crown className="w-6 h-6" />
+            </div>
+            <div className="space-y-1">
+              <h5 className="font-bold text-sm text-slate-900">VIP Concierge</h5>
+              <p className="text-xs text-slate-500 font-light">Personal olfactory consultations via phone & WhatsApp.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 9: Gentleman's Fragrance Quiz Callout */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-[#0A192F] text-white rounded-3xl p-8 sm:p-12 border border-blue-500/30 flex flex-col md:flex-row items-center justify-between gap-8 shadow-xl">
+          <div className="space-y-3 max-w-xl">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-900 text-blue-200 text-[10px] font-bold uppercase tracking-widest">
+              <Compass className="w-3.5 h-3.5 text-red-500" />
+              <span>4-STEP CONSULTATION</span>
+            </div>
+            <h3 className="font-playfair text-3xl font-bold">
+              Unsure Which Scent Matches Your Authority?
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-300 font-light leading-relaxed">
+              Answer four questions regarding your gentleman persona, preferred olfactory realm, and wearing occasions. Our master nose will reveal your bespoke matches.
+            </p>
+          </div>
+
+          <Link
+            to="/fragrance-finder"
+            className="px-8 py-3.5 bg-red-600 hover:bg-red-700 text-white rounded-xl font-bold text-xs uppercase tracking-widest transition shadow-lg shadow-red-600/30 shrink-0 flex items-center gap-2"
+          >
+            <span>Start Scent Finder</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+      </section>
 
       {/* Quick View Modal */}
-      <QuickViewModal
-        product={quickViewProduct}
-        onClose={() => setQuickViewProduct(null)}
-      />
+      <QuickViewModal product={quickViewProduct} onClose={() => setQuickViewProduct(null)} />
 
     </div>
   );

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth, ADMIN_EMAILS } from '../../context/AuthContext';
 import { MonogramLogo } from '../../components/common/MonogramLogo';
-import { Lock, Mail, ArrowRight, ShieldCheck, Sparkles, LogIn } from 'lucide-react';
+import { Lock, Mail, ArrowRight, ShieldCheck, LogIn, Crown, Sparkles } from 'lucide-react';
 import { toast } from 'sonner';
 
 export const Login = () => {
@@ -15,7 +15,7 @@ export const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const from = location.state?.from?.pathname || '/account/overview';
+  const from = location.state?.from?.pathname;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,10 +24,17 @@ export const Login = () => {
 
     try {
       await login(email, password);
-      toast.success('Welcome back to AB Noor Perfumes');
-      navigate(from, { replace: true });
+      toast.success('Signed in successfully');
+
+      // If logging in as admin, route directly to admin dashboard
+      const isOwnerAdmin = email.toLowerCase() === 'abnoorperfumes@gmail.com' || email.toLowerCase().includes('admin');
+      if (isOwnerAdmin && (!from || from === '/account/overview')) {
+        navigate('/admin/dashboard', { replace: true });
+      } else {
+        navigate(from || '/account/overview', { replace: true });
+      }
     } catch (err) {
-      setError(err.message || 'Failed to sign in. Please check your credentials.');
+      setError(err.message || 'Failed to sign in. Please verify your credentials.');
     } finally {
       setLoading(false);
     }
@@ -36,17 +43,23 @@ export const Login = () => {
   const handleGoogleSignIn = async () => {
     setError('');
     try {
-      await loginWithGoogle();
+      const user = await loginWithGoogle();
       toast.success('Signed in via Google successfully');
-      navigate(from, { replace: true });
+      if (user?.email?.toLowerCase() === 'abnoorperfumes@gmail.com') {
+        navigate('/admin/dashboard', { replace: true });
+      } else {
+        navigate(from || '/account/overview', { replace: true });
+      }
     } catch (err) {
       setError('Google sign-in could not be completed.');
     }
   };
 
-  const fillDemoAdmin = () => {
-    setEmail('admin@abnoorperfumes.com');
+  // One-click Master Admin Sign In using abnoorperfumes@gmail.com
+  const fillStoreAdmin = () => {
+    setEmail('abnoorperfumes@gmail.com');
     setPassword('admin123');
+    toast.info('Admin credentials loaded for abnoorperfumes@gmail.com');
   };
 
   const fillDemoPatron = () => {
@@ -55,91 +68,117 @@ export const Login = () => {
   };
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full bg-white rounded-3xl border border-stone-200/80 p-8 sm:p-10 shadow-xl space-y-6">
+    <div className="min-h-[85vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-slate-50">
+      <div className="max-w-md w-full bg-white rounded-3xl border border-slate-200/90 p-8 sm:p-10 shadow-xl space-y-6">
         
-        {/* Monogram Crest */}
+        {/* Monogram Crest in Blue, Black & Red */}
         <div className="text-center space-y-2">
           <div className="flex justify-center mb-2">
             <MonogramLogo variant="dark" />
           </div>
-          <h2 className="font-playfair text-2xl font-bold text-brand-emerald">
-            Patron Sign In
+          <h2 className="font-playfair text-2xl font-bold text-slate-900">
+            Sign In to AB Noor
           </h2>
-          <p className="text-xs text-stone-500 font-light">
-            Access your orders, bespoke wishlist, and loyalty benefits.
+          <p className="text-xs text-slate-500 font-light">
+            Access your orders, private reserve releases, or administrative dashboard.
           </p>
         </div>
 
         {error && (
-          <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl text-rose-700 text-xs">
-            {error}
+          <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-red-700 text-xs flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-red-600 shrink-0" />
+            <span>{error}</span>
           </div>
         )}
+
+        {/* Featured Store Admin Quick Login Card */}
+        <div className="bg-[#070B14] text-white p-4 rounded-2xl border border-blue-600/40 shadow-lg space-y-2.5">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-blue-400">
+              <ShieldCheck className="w-4 h-4 text-red-500" />
+              <span>Official Store Admin</span>
+            </div>
+            <span className="px-2 py-0.5 bg-red-600 text-white text-[9px] font-bold uppercase rounded-full">
+              Full Access
+            </span>
+          </div>
+          <p className="text-[11px] text-slate-300 leading-tight">
+            Login as <strong className="text-white font-mono">abnoorperfumes@gmail.com</strong> to manage products, categories, orders, banners, and analytics.
+          </p>
+          <button
+            type="button"
+            onClick={fillStoreAdmin}
+            className="w-full py-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white rounded-xl text-xs font-bold tracking-wider uppercase transition shadow-md shadow-red-600/30 flex items-center justify-center gap-1.5"
+          >
+            <Crown className="w-3.5 h-3.5 text-amber-300" />
+            <span>Load Admin Credentials (abnoorperfumes@gmail.com)</span>
+          </button>
+        </div>
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4 text-xs">
           <div>
-            <label className="block text-stone-600 font-bold uppercase tracking-wider mb-1">
+            <label className="block text-slate-700 font-bold uppercase tracking-wider mb-1">
               Email Address
             </label>
             <div className="relative">
-              <Mail className="w-4 h-4 text-stone-400 absolute left-3.5 top-3" />
+              <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
               <input
                 type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="patron@example.com"
-                className="w-full pl-10 pr-4 py-2.5 bg-stone-50 border border-stone-300 rounded-xl focus:outline-none focus:border-brand-emerald"
+                placeholder="patron@example.com or abnoorperfumes@gmail.com"
+                className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-blue-600 focus:bg-white transition text-slate-800"
               />
             </div>
           </div>
 
           <div>
             <div className="flex justify-between items-center mb-1">
-              <label className="block text-stone-600 font-bold uppercase tracking-wider">
+              <label className="block text-slate-700 font-bold uppercase tracking-wider">
                 Password
               </label>
-              <Link to="/forgot-password" className="text-brand-emerald hover:underline text-[11px]">
+              <Link to="/forgot-password" className="text-blue-600 hover:underline text-[11px] font-semibold">
                 Forgot password?
               </Link>
             </div>
             <div className="relative">
-              <Lock className="w-4 h-4 text-stone-400 absolute left-3.5 top-3" />
+              <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
               <input
                 type="password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full pl-10 pr-4 py-2.5 bg-stone-50 border border-stone-300 rounded-xl focus:outline-none focus:border-brand-emerald"
+                className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-blue-600 focus:bg-white transition text-slate-800"
               />
             </div>
           </div>
 
+          {/* Primary Action: Red Button */}
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3.5 bg-brand-emerald hover:bg-brand-dark-forest text-brand-soft-gold rounded-xl font-bold text-xs uppercase tracking-widest transition shadow-lg shadow-brand-emerald/20 flex items-center justify-center gap-2"
+            className="w-full py-3.5 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white rounded-xl font-bold text-xs uppercase tracking-widest transition shadow-lg shadow-red-600/30 flex items-center justify-center gap-2"
           >
-            <LogIn className="w-4 h-4 text-brand-gold" />
-            <span>{loading ? 'Authenticating...' : 'Sign In'}</span>
+            <LogIn className="w-4 h-4" />
+            <span>{loading ? 'Authenticating...' : 'Sign In Now'}</span>
           </button>
         </form>
 
         {/* Google Sign-in */}
         <div className="space-y-3">
           <div className="relative flex items-center justify-center">
-            <div className="border-t border-stone-200 w-full" />
-            <span className="bg-white px-3 text-[11px] text-stone-400 uppercase font-semibold">Or</span>
-            <div className="border-t border-stone-200 w-full" />
+            <div className="border-t border-slate-200 w-full" />
+            <span className="bg-white px-3 text-[11px] text-slate-400 uppercase font-semibold">Or</span>
+            <div className="border-t border-slate-200 w-full" />
           </div>
 
           <button
             onClick={handleGoogleSignIn}
             type="button"
-            className="w-full py-2.5 border border-stone-300 rounded-xl text-xs font-semibold text-stone-700 hover:bg-stone-50 transition flex items-center justify-center gap-2"
+            className="w-full py-2.5 border border-slate-300 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-50 transition flex items-center justify-center gap-2"
           >
             <svg className="w-4 h-4" viewBox="0 0 24 24">
               <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -152,33 +191,31 @@ export const Login = () => {
         </div>
 
         {/* Quick Demo Fill Buttons */}
-        <div className="pt-2 border-t border-stone-100 space-y-1.5">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-stone-400 block text-center">
-            Instant Preview Access
-          </span>
-          <div className="grid grid-cols-2 gap-2">
+        <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
+          <span>Demo shortcuts:</span>
+          <div className="flex gap-2">
             <button
               type="button"
-              onClick={fillDemoAdmin}
-              className="py-1.5 px-2 bg-amber-50 text-amber-900 border border-amber-200 rounded-lg text-[10px] font-bold hover:bg-amber-100 transition"
+              onClick={fillStoreAdmin}
+              className="px-2.5 py-1 bg-blue-50 text-blue-800 border border-blue-200 rounded-lg font-bold hover:bg-blue-100 transition"
             >
-              Fill Admin Credentials
+              Admin
             </button>
             <button
               type="button"
               onClick={fillDemoPatron}
-              className="py-1.5 px-2 bg-emerald-50 text-emerald-900 border border-emerald-200 rounded-lg text-[10px] font-bold hover:bg-emerald-100 transition"
+              className="px-2.5 py-1 bg-slate-100 text-slate-800 border border-slate-200 rounded-lg font-bold hover:bg-slate-200 transition"
             >
-              Fill Patron Credentials
+              Patron
             </button>
           </div>
         </div>
 
         {/* Register Link */}
-        <div className="text-center text-xs text-stone-500 pt-2">
+        <div className="text-center text-xs text-slate-500 pt-1">
           New to AB Noor?{' '}
-          <Link to="/register" className="text-brand-emerald font-bold hover:underline">
-            Create an Account
+          <Link to="/register" className="text-red-600 font-bold hover:underline">
+            Register as a Patron
           </Link>
         </div>
 

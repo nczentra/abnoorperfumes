@@ -64,17 +64,17 @@ export const AdminDashboard = () => {
         <div className="flex items-center gap-3">
           <Link
             to="/admin/products"
-            className="px-4 py-2.5 bg-brand-emerald text-brand-soft-gold rounded-xl font-bold text-xs uppercase tracking-wider hover:bg-brand-dark-forest transition flex items-center gap-1.5 shadow"
+            className="px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl font-bold text-xs uppercase tracking-wider transition flex items-center gap-1.5 shadow-md shadow-red-600/30"
           >
-            <Plus className="w-4 h-4 text-brand-gold" />
+            <Plus className="w-4 h-4 text-white" />
             <span>Add New Flacon</span>
           </Link>
 
           <Link
             to="/admin/inventory"
-            className="px-4 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-xl font-bold text-xs uppercase tracking-wider hover:bg-stone-50 transition flex items-center gap-1.5"
+            className="px-4 py-2.5 bg-white border border-slate-300 text-slate-700 rounded-xl font-bold text-xs uppercase tracking-wider hover:bg-slate-50 transition flex items-center gap-1.5"
           >
-            <Boxes className="w-4 h-4 text-brand-gold" />
+            <Boxes className="w-4 h-4 text-blue-600" />
             <span>Manage Stock</span>
           </Link>
         </div>

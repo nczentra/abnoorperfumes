@@ -288,10 +288,10 @@ export const FragranceFinder = () => {
 
             <button
               onClick={handleNext}
-              className="px-8 py-3 bg-brand-emerald hover:bg-brand-dark-forest text-brand-soft-gold text-xs font-bold uppercase tracking-widest rounded-xl transition shadow-lg shadow-brand-emerald/20 flex items-center gap-2"
+              className="px-8 py-3 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white text-xs font-bold uppercase tracking-widest rounded-xl transition shadow-lg shadow-red-600/30 flex items-center gap-2"
             >
               <span>{step === 4 ? 'Reveal Bespoke Matches' : 'Continue'}</span>
-              <ArrowRight className="w-4 h-4 text-brand-gold" />
+              <ArrowRight className="w-4 h-4" />
             </button>
           </div>
 

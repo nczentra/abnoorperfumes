@@ -296,8 +296,8 @@ export const ProductDetail = () => {
                     onClick={() => setSelectedVariant(v)}
                     className={`py-3 px-3 rounded-xl border text-center transition ${
                       selectedVariant?.id === v.id
-                        ? 'bg-brand-emerald text-brand-soft-gold border-brand-emerald font-bold shadow-md'
-                        : 'bg-white text-stone-700 border-stone-200 hover:border-brand-gold'
+                        ? 'bg-[#0A192F] text-white border-[#0A192F] font-bold shadow-md'
+                        : 'bg-white text-slate-700 border-slate-200 hover:border-blue-500'
                     }`}
                   >
                     <div className="text-xs font-bold">{v.size}</div>
@@ -314,33 +314,33 @@ export const ProductDetail = () => {
           <div className="space-y-3 pt-2">
             <div className="flex items-center gap-3">
               {/* Quantity Adjuster */}
-              <div className="flex items-center border border-stone-300 rounded-xl bg-white px-2 py-1 shadow-sm">
+              <div className="flex items-center border border-slate-300 rounded-xl bg-white px-2 py-1 shadow-sm">
                 <button
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="p-2 text-stone-500 hover:text-brand-emerald transition"
+                  className="p-2 text-slate-500 hover:text-blue-600 transition"
                   title="Decrease"
                 >
                   <Minus className="w-4 h-4" />
                 </button>
-                <span className="px-3 text-sm font-bold text-stone-800">
+                <span className="px-3 text-sm font-bold text-slate-800">
                   {quantity}
                 </span>
                 <button
                   onClick={() => setQuantity(quantity + 1)}
-                  className="p-2 text-stone-500 hover:text-brand-emerald transition"
+                  className="p-2 text-slate-500 hover:text-blue-600 transition"
                   title="Increase"
                 >
                   <Plus className="w-4 h-4" />
                 </button>
               </div>
 
-              {/* Add to Cart */}
+              {/* Add to Cart - Vibrant Red Button */}
               <button
                 onClick={handleAddToCart}
                 disabled={selectedVariant?.stock <= 0}
-                className="flex-1 py-3.5 px-6 bg-brand-emerald hover:bg-brand-dark-forest text-brand-soft-gold rounded-xl font-bold text-xs uppercase tracking-widest transition shadow-lg shadow-brand-emerald/20 flex items-center justify-center gap-2 disabled:opacity-50"
+                className="flex-1 py-3.5 px-6 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white rounded-xl font-bold text-xs uppercase tracking-widest transition shadow-lg shadow-red-600/30 flex items-center justify-center gap-2 disabled:opacity-50"
               >
-                <ShoppingBag className="w-4 h-4 text-brand-gold" />
+                <ShoppingBag className="w-4 h-4 text-white" />
                 <span>Add to Luxury Cart</span>
               </button>
 
@@ -349,8 +349,8 @@ export const ProductDetail = () => {
                 onClick={() => toggleWishlist(product)}
                 className={`p-3.5 rounded-xl border transition shadow-sm ${
                   inWishlist
-                    ? 'bg-rose-50 border-rose-200 text-rose-600'
-                    : 'bg-white border-stone-200 text-stone-600 hover:text-brand-emerald'
+                    ? 'bg-red-50 border-red-200 text-red-600'
+                    : 'bg-white border-slate-200 text-slate-600 hover:text-red-600'
                 }`}
                 title="Save to Wishlist"
               >
@@ -358,14 +358,14 @@ export const ProductDetail = () => {
               </button>
             </div>
 
-            {/* Buy Now Direct Button */}
+            {/* Buy Now Direct Button in Deep Royal Blue */}
             <button
               onClick={handleBuyNow}
               disabled={selectedVariant?.stock <= 0}
-              className="w-full py-3.5 px-6 bg-brand-gold hover:bg-brand-soft-gold text-brand-dark-forest rounded-xl font-bold text-xs uppercase tracking-widest transition shadow-md flex items-center justify-center gap-2 disabled:opacity-50"
+              className="w-full py-3.5 px-6 bg-[#0A192F] hover:bg-[#0F2C59] text-white border border-blue-600/30 rounded-xl font-bold text-xs uppercase tracking-widest transition shadow-md flex items-center justify-center gap-2 disabled:opacity-50"
             >
               <span>Instant Luxury Checkout (Buy Now)</span>
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-4 h-4 text-red-400" />
             </button>
           </div>
 

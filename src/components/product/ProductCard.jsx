@@ -64,116 +64,115 @@ export const ProductCard = ({ product, onQuickView }) => {
 
   return (
     <div
-      className="group bg-white rounded-2xl overflow-hidden border border-stone-200/80 shadow-sm hover:shadow-luxury hover:border-brand-gold/60 transition-all duration-300 flex flex-col relative"
+      className="group bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-2xl hover:border-blue-500/50 transition-all duration-300 flex flex-col relative"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Badges Overlay */}
       <div className="absolute top-3 left-3 z-10 flex flex-col gap-1.5 items-start">
         {product.bestseller && (
-          <span className="px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-brand-emerald text-brand-soft-gold rounded-full shadow-sm">
+          <span className="px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-red-600 text-white rounded-full shadow-sm">
             Best Seller
           </span>
         )}
         {product.newArrival && (
-          <span className="px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-brand-gold text-brand-dark-forest rounded-full shadow-sm">
+          <span className="px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-blue-600 text-white rounded-full shadow-sm">
             New Arrival
           </span>
         )}
         {hasDiscount && (
-          <span className="px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-rose-600 text-white rounded-full shadow-sm">
+          <span className="px-2 py-0.5 text-[10px] font-extrabold bg-[#0A192F] text-blue-200 rounded-full shadow-sm">
             {discountPercent}% OFF
           </span>
         )}
       </div>
 
-      {/* Action Buttons Overlay (Wishlist, Compare, Quick View) */}
-      <div className="absolute top-3 right-3 z-10 flex flex-col gap-1.5 opacity-90 group-hover:opacity-100 transition-opacity">
+      {/* Floating Action Buttons */}
+      <div className="absolute top-3 right-3 z-10 flex flex-col gap-1.5">
         <button
           onClick={handleToggleWishlist}
           className={`p-2 rounded-full backdrop-blur-md transition shadow-md ${
             inWishlist
-              ? 'bg-rose-50 text-rose-600 border border-rose-200'
-              : 'bg-white/90 text-stone-600 hover:text-brand-emerald hover:bg-white border border-stone-200'
+              ? 'bg-red-600 text-white'
+              : 'bg-white/90 text-slate-700 hover:text-red-600 hover:bg-white'
           }`}
-          title={inWishlist ? 'Remove from wishlist' : 'Save to wishlist'}
+          title={inWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}
+          aria-label="Wishlist toggle"
         >
-          <Heart className={`w-4 h-4 ${inWishlist ? 'fill-current' : ''}`} />
+          <Heart className="w-4 h-4 fill-current" />
         </button>
 
         <button
           onClick={handleToggleCompare}
           className={`p-2 rounded-full backdrop-blur-md transition shadow-md ${
             inCompare
-              ? 'bg-amber-50 text-brand-gold border border-brand-gold/50'
-              : 'bg-white/90 text-stone-600 hover:text-brand-gold hover:bg-white border border-stone-200'
+              ? 'bg-blue-600 text-white'
+              : 'bg-white/90 text-slate-700 hover:text-blue-600 hover:bg-white'
           }`}
-          title={inCompare ? 'Remove from compare' : 'Add to compare'}
+          title={inCompare ? 'Remove from comparison' : 'Compare fragrance'}
+          aria-label="Compare toggle"
         >
           <Scale className="w-4 h-4" />
         </button>
 
         <button
           onClick={handleQuickView}
-          className="p-2 rounded-full bg-white/90 text-stone-600 hover:text-brand-emerald hover:bg-white border border-stone-200 backdrop-blur-md transition shadow-md hidden sm:flex"
+          className="p-2 rounded-full bg-white/90 text-slate-700 hover:text-blue-600 hover:bg-white backdrop-blur-md transition shadow-md hidden sm:block"
           title="Quick preview"
+          aria-label="Quick view"
         >
           <Eye className="w-4 h-4" />
         </button>
       </div>
 
-      {/* Image Container with Link */}
-      <Link to={`/product/${product.slug}`} className="relative aspect-[4/5] overflow-hidden bg-stone-100 block">
+      {/* Product Image Stage */}
+      <Link to={`/product/${product.slug}`} className="relative block overflow-hidden aspect-[4/5] bg-slate-100">
         <img
-          src={isHovered && product.images?.[1] ? product.images[1] : product.mainImage}
+          src={product.mainImage}
           alt={product.name}
-          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-dark-forest/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </Link>
 
-      {/* Product Content */}
-      <div className="p-5 flex-1 flex flex-col justify-between">
+      {/* Information Container */}
+      <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
         <div>
-          {/* Brand & Concentration */}
-          <div className="flex items-center justify-between text-[11px] text-stone-500 mb-1.5">
-            <span className="font-semibold uppercase tracking-wider text-brand-gold">
-              {product.brandName}
-            </span>
-            <span className="text-[10px] text-stone-400">
-              {product.concentration}
-            </span>
+          {/* Brand & Category */}
+          <div className="flex items-center justify-between text-[11px] uppercase tracking-wider text-slate-400 mb-1">
+            <span className="font-semibold text-blue-600">{product.brandName || 'AB Noor Private'}</span>
+            <span>{product.concentration || 'Extrait'}</span>
           </div>
 
           {/* Product Title */}
           <Link to={`/product/${product.slug}`}>
-            <h3 className="font-playfair font-bold text-base text-brand-emerald hover:text-brand-gold transition line-clamp-1 mb-1">
+            <h3 className="font-playfair font-bold text-base text-slate-900 group-hover:text-blue-600 transition line-clamp-1 mb-1">
               {product.name}
             </h3>
           </Link>
 
           {/* Star Rating */}
-          <div className="mb-2.5">
+          <div className="mb-2">
             <StarRating rating={product.rating || 5} reviewCount={product.reviewCount} size={13} />
           </div>
 
           {/* Olfactory Notes Preview */}
-          <p className="text-xs text-stone-500 line-clamp-1 mb-3">
-            <strong className="text-stone-700">Notes:</strong> {product.topNotes?.slice(0, 2).join(', ')}, {product.middleNotes?.[0]}
+          <p className="text-xs text-slate-500 line-clamp-1 mb-3">
+            <strong className="text-slate-700">Notes:</strong> {product.topNotes?.slice(0, 2).join(', ')}, {product.middleNotes?.[0]}
           </p>
 
           {/* Variant Size Pills */}
           {product.variants && product.variants.length > 1 && (
-            <div className="flex items-center gap-1.5 mb-3 flex-wrap">
+            <div className="flex items-center gap-1.5 mb-2 flex-wrap">
               {product.variants.map((v) => (
                 <button
                   key={v.id}
                   onClick={() => setSelectedVariant(v)}
-                  className={`px-2 py-0.5 text-[11px] font-semibold rounded border transition ${
+                  className={`px-2 py-0.5 text-[11px] font-semibold rounded-md border transition ${
                     selectedVariant.id === v.id
-                      ? 'bg-brand-emerald text-brand-soft-gold border-brand-emerald'
-                      : 'bg-stone-50 text-stone-600 border-stone-200 hover:border-brand-gold'
+                      ? 'bg-[#0A192F] text-white border-[#0A192F]'
+                      : 'bg-slate-50 text-slate-600 border-slate-200 hover:border-blue-500'
                   }`}
                 >
                   {v.size}
@@ -184,30 +183,31 @@ export const ProductCard = ({ product, onQuickView }) => {
         </div>
 
         {/* Price & Add to Cart Row */}
-        <div className="pt-3 border-t border-stone-100 flex items-center justify-between mt-auto">
+        <div className="pt-3 border-t border-slate-100 flex items-center justify-between mt-auto">
           <div>
             <div className="flex items-baseline gap-2">
-              <span className="font-bold text-base text-brand-emerald">
+              <span className="font-bold text-base text-slate-900">
                 ₹{price.toLocaleString('en-IN')}
               </span>
               {hasDiscount && (
-                <span className="text-xs text-stone-400 line-through">
+                <span className="text-xs text-slate-400 line-through">
                   ₹{originalPrice.toLocaleString('en-IN')}
                 </span>
               )}
             </div>
-            <span className="text-[10px] text-stone-400 block">
-              Inclusive of all taxes
+            <span className="text-[10px] text-slate-400 block">
+              Taxes included
             </span>
           </div>
 
+          {/* Vibrant Red Button for Add to Cart */}
           <button
             onClick={handleAddToCart}
-            className="p-2.5 bg-brand-emerald hover:bg-brand-dark-forest text-brand-soft-gold rounded-xl transition shadow-md shadow-brand-emerald/20 flex items-center justify-center gap-1.5 group/btn"
+            className="px-3.5 py-2.5 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white rounded-xl transition shadow-md shadow-red-600/30 flex items-center justify-center gap-1.5 group/btn"
             title="Add to cart"
           >
-            <ShoppingBag className="w-4 h-4 text-brand-gold group-hover/btn:scale-110 transition-transform" />
-            <span className="text-xs font-semibold uppercase tracking-wider hidden sm:inline">Add</span>
+            <ShoppingBag className="w-4 h-4 text-white group-hover/btn:scale-110 transition-transform" />
+            <span className="text-xs font-bold uppercase tracking-wider hidden sm:inline">Add</span>
           </button>
         </div>
       </div>

@@ -230,7 +230,7 @@ export const Shop = () => {
               </p>
               <button
                 onClick={handleResetFilters}
-                className="px-6 py-2.5 bg-brand-emerald text-brand-soft-gold text-xs font-bold uppercase tracking-wider rounded-xl hover:bg-brand-dark-forest transition"
+                className="px-6 py-2.5 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white text-xs font-bold uppercase tracking-wider rounded-xl transition shadow-md shadow-red-600/30"
               >
                 Reset All Filters
               </button>

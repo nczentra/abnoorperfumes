@@ -15,11 +15,10 @@ import {
   User, 
   Menu, 
   ChevronDown, 
-  Sparkles, 
   ShieldCheck, 
   LogOut, 
-  Scale,
-  Compass
+  Compass,
+  LayoutDashboard
 } from 'lucide-react';
 
 export const Header = () => {
@@ -62,6 +61,7 @@ export const Header = () => {
     { name: 'Dark Amber', path: '/category/amber' },
     { name: 'Pure Attars', path: '/category/attars' },
     { name: 'Gift Coffrets', path: '/category/gift-sets' },
+    { name: 'About Us', path: '/about' },
     { name: 'Scent Finder', path: '/fragrance-finder', icon: Compass },
   ];
 
@@ -80,8 +80,8 @@ export const Header = () => {
       <header
         className={`sticky top-0 z-40 w-full transition-all duration-300 ${
           isScrolled
-            ? 'bg-brand-dark-forest/95 backdrop-blur-md shadow-xl py-3 border-b border-brand-gold/20'
-            : 'bg-brand-dark-forest py-4 border-b border-brand-gold/15'
+            ? 'bg-[#070B14]/95 backdrop-blur-md shadow-2xl py-3 border-b border-blue-900/40 text-white'
+            : 'bg-[#070B14] py-4 border-b border-blue-900/30 text-white'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -91,7 +91,7 @@ export const Header = () => {
             <div className="flex items-center gap-4">
               <button
                 onClick={() => setIsMobileMenuOpen(true)}
-                className="lg:hidden p-2 text-stone-300 hover:text-brand-soft-gold rounded-lg transition"
+                className="lg:hidden p-2 text-slate-300 hover:text-white rounded-lg transition"
                 aria-label="Open navigation menu"
               >
                 <Menu className="w-6 h-6" />
@@ -100,49 +100,43 @@ export const Header = () => {
               <MonogramLogo variant="light" />
             </div>
 
-            {/* Center: Desktop Navigation Bar */}
-            <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
+            {/* Middle: Desktop Navigation Links */}
+            <nav className="hidden lg:flex items-center gap-6 xl:gap-8 text-xs font-semibold uppercase tracking-widest text-slate-200">
               {navLinks.map((link) => {
                 const isActive = location.pathname === link.path;
-
                 if (link.hasDropdown) {
                   return (
-                    <div
-                      key={link.name}
+                    <div 
+                      key={link.name} 
                       className="relative"
                       onMouseEnter={() => setIsCategoryMenuOpen(true)}
                       onMouseLeave={() => setIsCategoryMenuOpen(false)}
                     >
                       <Link
                         to={link.path}
-                        className={`flex items-center gap-1 px-3 py-2 text-xs font-semibold uppercase tracking-wider rounded-md transition-colors ${
-                          isActive
-                            ? 'text-brand-soft-gold font-bold'
-                            : 'text-stone-200 hover:text-brand-soft-gold hover:bg-white/5'
+                        className={`flex items-center gap-1 py-2 hover:text-blue-400 transition ${
+                          isActive ? 'text-red-500 font-bold' : ''
                         }`}
                       >
                         <span>{link.name}</span>
-                        <ChevronDown className="w-3.5 h-3.5 text-brand-gold" />
+                        <ChevronDown className="w-3.5 h-3.5 opacity-60" />
                       </Link>
 
                       {/* Dropdown Menu */}
                       {isCategoryMenuOpen && (
-                        <div className="absolute top-full left-0 w-80 bg-brand-dark-forest border border-brand-gold/30 rounded-xl shadow-2xl p-3 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-                          <div className="text-[10px] uppercase tracking-widest text-brand-gold font-bold px-3 py-1.5 border-b border-white/10 mb-1">
-                            Gentlemen's Collections
-                          </div>
+                        <div className="absolute top-full left-0 w-80 bg-[#0A192F] text-slate-100 rounded-2xl shadow-2xl border border-blue-600/30 p-3 space-y-1 animate-in fade-in slide-in-from-top-2 duration-200">
                           {categoryDropdownItems.map((item) => (
                             <Link
-                              key={item.path}
+                              key={item.name}
                               to={item.path}
-                              className="block p-2.5 rounded-lg hover:bg-white/5 transition group"
+                              className="block p-3 rounded-xl hover:bg-blue-900/50 transition group"
                             >
-                              <div className="text-xs font-semibold text-white group-hover:text-brand-soft-gold transition">
+                              <span className="font-playfair font-bold text-sm text-white group-hover:text-blue-300 block">
                                 {item.name}
-                              </div>
-                              <div className="text-[11px] text-stone-400 group-hover:text-stone-300 transition">
+                              </span>
+                              <span className="text-[11px] text-slate-400 font-normal leading-tight block mt-0.5">
                                 {item.desc}
-                              </div>
+                              </span>
                             </Link>
                           ))}
                         </div>
@@ -151,195 +145,242 @@ export const Header = () => {
                   );
                 }
 
+                const Icon = link.icon;
                 return (
                   <Link
                     key={link.name}
                     to={link.path}
-                    className={`flex items-center gap-1 px-3 py-2 text-xs font-semibold uppercase tracking-wider rounded-md transition-colors ${
-                      isActive
-                        ? 'text-brand-soft-gold font-bold bg-white/5'
-                        : 'text-stone-200 hover:text-brand-soft-gold hover:bg-white/5'
+                    className={`py-2 flex items-center gap-1.5 hover:text-blue-400 transition relative ${
+                      isActive ? 'text-red-500 font-bold' : ''
                     }`}
                   >
-                    {link.icon && <link.icon className="w-3.5 h-3.5 text-brand-gold" />}
+                    {Icon && <Icon className="w-3.5 h-3.5 text-blue-400" />}
                     <span>{link.name}</span>
+                    {isActive && (
+                      <span className="absolute bottom-0 left-0 w-full h-0.5 bg-red-600 rounded-full" />
+                    )}
                   </Link>
                 );
               })}
             </nav>
 
-            {/* Right: Actions (Search, Compare, Wishlist, Account, Cart) */}
-            <div className="flex items-center gap-1 sm:gap-2">
+            {/* Right: Action Utilities */}
+            <div className="flex items-center gap-2 sm:gap-3">
               
-              {/* Search Icon */}
+              {/* Search Toggle */}
               <button
                 onClick={() => setIsSearchOpen(true)}
-                className="p-2 text-stone-300 hover:text-brand-soft-gold rounded-full hover:bg-white/5 transition"
-                title="Search Fragrances"
+                className="p-2.5 text-slate-300 hover:text-white hover:bg-white/5 rounded-xl transition"
+                title="Search fragrances"
+                aria-label="Search"
               >
                 <Search className="w-5 h-5" />
               </button>
 
-              {/* Compare Icon */}
+              {/* Compare Button */}
               {compareItems.length > 0 && (
                 <Link
                   to="/compare"
-                  className="relative p-2 text-stone-300 hover:text-brand-soft-gold rounded-full hover:bg-white/5 transition hidden sm:inline-flex"
-                  title="Compare Fragrances"
+                  className="p-2.5 text-slate-300 hover:text-blue-400 hover:bg-white/5 rounded-xl transition relative hidden sm:flex"
+                  title="Compare fragrances"
                 >
-                  <Scale className="w-5 h-5 text-brand-gold" />
-                  <span className="absolute -top-1 -right-1 bg-brand-gold text-brand-dark-forest font-bold text-[10px] w-4 h-4 rounded-full flex items-center justify-center">
+                  <span className="text-xs font-bold font-mono">VS</span>
+                  <span className="absolute -top-0.5 -right-0.5 bg-blue-600 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
                     {compareItems.length}
                   </span>
                 </Link>
               )}
 
-              {/* Wishlist Icon */}
+              {/* Wishlist Button with Red Badge */}
               <Link
                 to="/account/wishlist"
-                className="relative p-2 text-stone-300 hover:text-brand-soft-gold rounded-full hover:bg-white/5 transition"
-                title="Your Wishlist"
+                className="p-2.5 text-slate-300 hover:text-red-400 hover:bg-white/5 rounded-xl transition relative"
+                title="Wishlist"
               >
                 <Heart className="w-5 h-5" />
                 {wishlistCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-brand-gold text-brand-dark-forest font-bold text-[10px] w-4 h-4 rounded-full flex items-center justify-center">
+                  <span className="absolute -top-0.5 -right-0.5 bg-red-600 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center animate-pulse">
                     {wishlistCount}
                   </span>
                 )}
               </Link>
 
+              {/* Cart Drawer Trigger with Red Badge */}
+              <button
+                onClick={() => setIsCartOpen(true)}
+                className="p-2.5 text-slate-300 hover:text-white hover:bg-white/5 rounded-xl transition relative"
+                title="Shopping Bag"
+                aria-label="View shopping bag"
+              >
+                <ShoppingBag className="w-5 h-5" />
+                {totalItemCount > 0 && (
+                  <span className="absolute -top-0.5 -right-0.5 bg-red-600 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-lg shadow-red-600/40">
+                    {totalItemCount}
+                  </span>
+                )}
+              </button>
+
               {/* Account Dropdown */}
               <div className="relative">
                 <button
                   onClick={() => setIsAccountDropdownOpen(!isAccountDropdownOpen)}
-                  className="p-2 text-stone-300 hover:text-brand-soft-gold rounded-full hover:bg-white/5 transition flex items-center gap-1"
-                  title="Account"
+                  className={`p-2 sm:px-3 sm:py-2 flex items-center gap-2 rounded-xl text-xs font-semibold transition border ${
+                    isAdmin
+                      ? 'border-red-500/50 bg-red-950/30 text-red-200 hover:bg-red-900/40'
+                      : 'border-white/10 hover:border-blue-500/40 hover:bg-white/5 text-slate-200'
+                  }`}
+                  aria-label="User Account"
                 >
-                  <User className="w-5 h-5" />
+                  <User className="w-4 h-4 text-blue-400" />
                   {currentUser && (
-                    <span className="hidden xl:inline text-xs font-medium text-stone-200">
-                      {currentUser.displayName?.split(' ')[0] || 'Patron'}
+                    <span className="hidden md:inline font-medium">
+                      {currentUser.displayName?.split(' ')[0] || (isAdmin ? 'Admin' : 'Patron')}
                     </span>
                   )}
+                  {isAdmin && (
+                    <span className="w-2 h-2 rounded-full bg-red-600 animate-ping hidden md:inline-block" />
+                  )}
+                  <ChevronDown className="w-3.5 h-3.5 opacity-60 hidden sm:inline" />
                 </button>
 
+                {/* Account Popover */}
                 {isAccountDropdownOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-64 bg-brand-dark-forest border border-brand-gold/30 rounded-xl shadow-2xl p-2 z-50 animate-in fade-in duration-150 text-xs">
+                  <div className="absolute right-0 top-full mt-2 w-72 bg-[#0A192F] text-slate-200 rounded-2xl shadow-2xl border border-blue-600/30 p-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
                     {currentUser ? (
-                      <>
-                        <div className="p-3 border-b border-white/10 mb-1">
-                          <div className="font-semibold text-white truncate">
+                      <div className="p-3 border-b border-white/10 mb-2">
+                        <div className="flex items-center justify-between">
+                          <span className="font-bold text-white text-sm block">
                             {currentUser.displayName || 'Gentleman Patron'}
-                          </div>
-                          <div className="text-[11px] text-brand-soft-gold truncate">
-                            {currentUser.email}
-                          </div>
+                          </span>
+                          {isAdmin && (
+                            <span className="px-2 py-0.5 bg-red-600 text-white text-[9px] font-bold uppercase rounded-full">
+                              Admin
+                            </span>
+                          )}
                         </div>
-
-                        <Link
-                          to="/account/overview"
-                          onClick={() => setIsAccountDropdownOpen(false)}
-                          className="flex items-center gap-2 px-3 py-2 text-stone-200 hover:text-brand-soft-gold hover:bg-white/5 rounded-lg transition"
-                        >
-                          <User className="w-4 h-4 text-brand-gold" />
-                          <span>Patron Dashboard</span>
-                        </Link>
-
-                        <Link
-                          to="/account/orders"
-                          onClick={() => setIsAccountDropdownOpen(false)}
-                          className="flex items-center gap-2 px-3 py-2 text-stone-200 hover:text-brand-soft-gold hover:bg-white/5 rounded-lg transition"
-                        >
-                          <ShoppingBag className="w-4 h-4 text-brand-gold" />
-                          <span>My Orders & Invoices</span>
-                        </Link>
-
-                        {isAdmin && (
-                          <Link
-                            to="/admin/dashboard"
-                            onClick={() => setIsAccountDropdownOpen(false)}
-                            className="flex items-center gap-2 px-3 py-2 text-brand-gold bg-amber-950/40 border border-brand-gold/30 rounded-lg my-1 font-semibold hover:bg-amber-950/70 transition"
-                          >
-                            <ShieldCheck className="w-4 h-4" />
-                            <span>Store Admin Dashboard</span>
-                          </Link>
-                        )}
-
-                        <div className="border-t border-white/10 my-1" />
-
-                        <button
-                          onClick={() => {
-                            logout();
-                            setIsAccountDropdownOpen(false);
-                          }}
-                          className="flex items-center gap-2 w-full px-3 py-2 text-stone-400 hover:text-rose-400 hover:bg-white/5 rounded-lg transition"
-                        >
-                          <LogOut className="w-4 h-4" />
-                          <span>Log Out</span>
-                        </button>
-                      </>
+                        <span className="text-xs text-blue-300 font-mono block mt-0.5">
+                          {currentUser.email}
+                        </span>
+                      </div>
                     ) : (
-                      <div className="p-2 space-y-2">
-                        <div className="text-center pb-2 border-b border-white/10">
-                          <p className="text-[11px] text-stone-300 mb-2">
-                            Welcome to AB Noor Pour Homme
-                          </p>
+                      <div className="p-3 border-b border-white/10 mb-2 text-center">
+                        <span className="font-playfair font-bold text-sm text-white block">
+                          House of AB Noor
+                        </span>
+                        <span className="text-xs text-slate-400 font-light block mb-3">
+                          Sign in for orders & private reservations
+                        </span>
+                        <div className="grid grid-cols-2 gap-2">
                           <Link
                             to="/login"
-                            onClick={() => setIsAccountDropdownOpen(false)}
-                            className="block w-full py-2 bg-brand-gold text-brand-dark-forest font-bold rounded-lg text-center hover:bg-brand-soft-gold transition"
+                            className="py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold text-center block transition shadow-md shadow-red-600/30"
                           >
                             Sign In
                           </Link>
-                        </div>
-                        <div className="text-center text-[11px] text-stone-400">
-                          New patron?{' '}
                           <Link
                             to="/register"
-                            onClick={() => setIsAccountDropdownOpen(false)}
-                            className="text-brand-soft-gold hover:underline font-semibold"
+                            className="py-2 bg-blue-900/40 hover:bg-blue-900/80 border border-blue-500/30 text-blue-200 rounded-xl text-xs font-bold text-center block transition"
                           >
-                            Create an Account
+                            Register
                           </Link>
                         </div>
                       </div>
                     )}
 
-                    {/* Quick Dev Switcher */}
-                    <div className="pt-2 mt-1 border-t border-white/10 text-center">
+                    {/* Nav Links inside Dropdown */}
+                    <div className="space-y-1 text-xs">
+                      {currentUser && (
+                        <>
+                          <Link
+                            to="/account/overview"
+                            className="flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-blue-900/50 hover:text-white transition"
+                          >
+                            <User className="w-4 h-4 text-blue-400" />
+                            <span>Patron Account Portal</span>
+                          </Link>
+                          <Link
+                            to="/account/orders"
+                            className="flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-blue-900/50 hover:text-white transition"
+                          >
+                            <ShoppingBag className="w-4 h-4 text-blue-400" />
+                            <span>My Orders & Invoices</span>
+                          </Link>
+                        </>
+                      )}
+
+                      {/* Store Admin Dashboard Access */}
+                      {isAdmin ? (
+                        <Link
+                          to="/admin/dashboard"
+                          className="flex items-center gap-2.5 p-2.5 rounded-xl bg-red-950/40 border border-red-500/30 text-red-200 hover:bg-red-900/50 font-bold transition my-1"
+                        >
+                          <LayoutDashboard className="w-4 h-4 text-red-400" />
+                          <span>Store Admin Dashboard</span>
+                        </Link>
+                      ) : (
+                        <Link
+                          to="/login"
+                          className="flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-blue-900/50 text-blue-300 transition"
+                        >
+                          <ShieldCheck className="w-4 h-4 text-blue-400" />
+                          <span>Admin Login (abnoorperfumes@gmail.com)</span>
+                        </Link>
+                      )}
+
+                      <Link
+                        to="/about"
+                        className="flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-blue-900/50 hover:text-white transition"
+                      >
+                        <ShieldCheck className="w-4 h-4 text-blue-400" />
+                        <span>About Our Heritage</span>
+                      </Link>
+
+                      <Link
+                        to="/track-order"
+                        className="flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-blue-900/50 hover:text-white transition"
+                      >
+                        <Compass className="w-4 h-4 text-blue-400" />
+                        <span>Track Consignment</span>
+                      </Link>
+
+                      {/* Quick Developer / Demo Role Toggle */}
                       <button
                         onClick={toggleRole}
-                        className="text-[10px] text-stone-400 hover:text-brand-gold underline"
+                        className="w-full text-left p-2 rounded-lg bg-black/40 text-[10px] text-slate-400 hover:text-white transition block mt-1"
+                        title="Toggle Admin/Customer role in dev mode"
                       >
-                        [Dev] Role: {isAdmin ? 'Admin' : 'Customer'} (Click to switch)
+                        [Quick Switch]: Currently {isAdmin ? 'Store Admin' : 'Patron'} (Click to toggle)
                       </button>
+
+                      {currentUser && (
+                        <button
+                          onClick={logout}
+                          className="w-full flex items-center gap-2.5 p-2.5 rounded-xl text-red-400 hover:bg-red-950/30 transition text-left pt-2 border-t border-white/10"
+                        >
+                          <LogOut className="w-4 h-4 text-red-500" />
+                          <span>Sign Out</span>
+                        </button>
+                      )}
                     </div>
                   </div>
                 )}
               </div>
 
-              {/* Luxury Cart Drawer Trigger */}
-              <button
-                onClick={() => setIsCartOpen(true)}
-                className="relative flex items-center gap-2 px-3 py-2 bg-brand-emerald hover:bg-brand-emerald/80 text-brand-soft-gold border border-brand-gold/40 rounded-lg text-xs font-semibold transition ml-1 shadow-md shadow-brand-emerald/30 group"
-                title="View Shopping Cart"
-              >
-                <ShoppingBag className="w-4 h-4 text-brand-gold group-hover:scale-110 transition-transform" />
-                <span className="hidden sm:inline">Cart</span>
-                <span className="bg-brand-gold text-brand-dark-forest font-bold text-[10px] px-1.5 py-0.5 rounded-full">
-                  {totalItemCount}
-                </span>
-              </button>
-
             </div>
+
           </div>
         </div>
       </header>
 
-      {/* Global Overlays & Drawers */}
+      {/* Global Modals & Drawers */}
       <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
       <CartDrawer />
-      <MobileNavDrawer isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
+      <MobileNavDrawer
+        isOpen={isMobileMenuOpen}
+        onClose={() => setIsMobileMenuOpen(false)}
+        navLinks={navLinks}
+        categoryItems={categoryDropdownItems}
+      />
     </>
   );
 };

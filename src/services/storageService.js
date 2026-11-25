@@ -38,9 +38,9 @@ const STORAGE_KEYS = {
   USERS: 'ab_noor_users',
 };
 
-const CURRENT_VERSION = 'v2_men_exclusive';
+const CURRENT_VERSION = 'v3_blue_black_theme';
 
-// Seed initial data if not present or if upgrading to men's exclusive catalog
+// Seed initial data if not present or if upgrading to blue/black theme
 export const initializeDataStore = () => {
   if (typeof window === 'undefined') return;
 
@@ -53,6 +53,19 @@ export const initializeDataStore = () => {
     localStorage.setItem(STORAGE_KEYS.COUPONS, JSON.stringify(SEED_COUPONS));
     localStorage.setItem(STORAGE_KEYS.BLOGS, JSON.stringify(SEED_BLOGS));
     localStorage.setItem(STORAGE_KEYS.VERSION, CURRENT_VERSION);
+
+    // Seed master admin
+    const masterAdmin = {
+      uid: 'usr-admin-master',
+      displayName: 'AB Noor Store Admin',
+      fullName: 'AB Noor Master Perfumer & Store Admin',
+      email: 'abnoorperfumes@gmail.com',
+      phone: '+91 98765 43210',
+      role: 'super_admin',
+      addresses: [],
+      createdAt: new Date().toISOString(),
+    };
+    localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify([masterAdmin]));
   }
 
   if (!localStorage.getItem(STORAGE_KEYS.PRODUCTS)) {

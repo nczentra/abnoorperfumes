@@ -4,17 +4,30 @@
 
 @layer base {
   :root {
-    --color-emerald: #103B2D;
-    --color-dark-forest: #0B2119;
-    --color-gold: #C6A15B;
-    --color-soft-gold: #E5D3A3;
-    --color-ivory: #F8F5EF;
-    --color-charcoal: #171717;
-    --color-muted-grey: #777777;
+    --color-blue: #0F2C59;
+    --color-dark-blue: #0A192F;
+    --color-black: #070B14;
+    --color-charcoal: #111827;
+    --color-white: #FFFFFF;
+    --color-off-white: #F8FAFC;
+    --color-royal-blue: #1D4ED8;
+    --color-sapphire: #2563EB;
+    --color-ice-blue: #DBEAFE;
+    --color-red: #DC2626;
+    --color-red-dark: #B91C1C;
+    --color-red-hover: #EF4444;
+
+    /* Legacy mapping */
+    --color-emerald: #0A192F;
+    --color-dark-forest: #070B14;
+    --color-gold: #2563EB;
+    --color-soft-gold: #DBEAFE;
+    --color-ivory: #F8FAFC;
+    --color-muted-grey: #64748B;
   }
 
   body {
-    background-color: var(--color-ivory);
+    background-color: var(--color-off-white);
     color: var(--color-charcoal);
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     overflow-x: hidden;
@@ -26,28 +39,38 @@
   }
 }
 
-/* Custom Luxury Scrollbar */
+/* Custom Scrollbar - Blue & Red */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #F8F5EF;
+  background: #F8FAFC;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #C6A15B;
+  background: #2563EB;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #103B2D;
+  background: #DC2626;
 }
 
-/* Gold Shimmer Text & Border Utility */
-.gold-shimmer {
-  background: linear-gradient(90deg, #C6A15B 0%, #FFF2D1 50%, #C6A15B 100%);
+/* Blue Shimmer Text Utility */
+.blue-shimmer {
+  background: linear-gradient(90deg, #1D4ED8 0%, #93C5FD 50%, #1D4ED8 100%);
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shine 4s linear infinite;
+}
+
+/* Red Shimmer Text Utility */
+.red-shimmer {
+  background: linear-gradient(90deg, #DC2626 0%, #FCA5A5 50%, #DC2626 100%);
   background-size: 200% auto;
   color: transparent;
   -webkit-background-clip: text;
@@ -61,14 +84,39 @@
   }
 }
 
-.gold-border-gradient {
-  border-image: linear-gradient(to right, #C6A15B, #E5D3A3, #C6A15B) 1;
+.luxury-pattern-bg {
+  background-color: #070B14;
+  background-image: radial-gradient(rgba(37, 99, 235, 0.15) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
-.luxury-pattern-bg {
-  background-color: #0B2119;
-  background-image: radial-gradient(rgba(198, 161, 91, 0.12) 1px, transparent 1px);
-  background-size: 24px 24px;
+/* Primary Red Button Utility */
+.btn-red {
+  background-color: #DC2626;
+  color: #FFFFFF;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 14px 0 rgba(220, 38, 38, 0.35);
+}
+
+.btn-red:hover {
+  background-color: #B91C1C;
+  box-shadow: 0 6px 20px rgba(220, 38, 38, 0.45);
+  transform: translateY(-1px);
+}
+
+.btn-red:active {
+  transform: translateY(0);
+}
+
+/* Primary Blue Button Utility */
+.btn-blue {
+  background-color: #0F2C59;
+  color: #FFFFFF;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-blue:hover {
+  background-color: #0A192F;
 }
 
 .luxury-card {
@@ -77,5 +125,5 @@
 
 .luxury-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 16px 32px -8px rgba(16, 59, 45, 0.16), 0 0 0 1px rgba(198, 161, 91, 0.3);
+  box-shadow: 0 16px 32px -8px rgba(10, 25, 47, 0.18), 0 0 0 1px rgba(37, 99, 235, 0.25);
 }

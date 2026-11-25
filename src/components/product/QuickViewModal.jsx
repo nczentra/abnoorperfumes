@@ -141,13 +141,13 @@ export const QuickViewModal = ({ product, onClose }) => {
             </div>
 
             {/* Actions */}
-            <div className="space-y-3 pt-4 border-t border-stone-200">
+            <div className="space-y-3 pt-4 border-t border-slate-200">
               <div className="flex gap-3">
                 <button
                   onClick={handleAddToCart}
-                  className="flex-1 py-3 px-4 bg-brand-emerald hover:bg-brand-dark-forest text-brand-soft-gold font-bold text-xs uppercase tracking-widest rounded-xl transition shadow-lg shadow-brand-emerald/20 flex items-center justify-center gap-2"
+                  className="flex-1 py-3 px-4 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-bold text-xs uppercase tracking-widest rounded-xl transition shadow-lg shadow-red-600/30 flex items-center justify-center gap-2"
                 >
-                  <ShoppingBag className="w-4 h-4 text-brand-gold" />
+                  <ShoppingBag className="w-4 h-4 text-white" />
                   <span>Add to Luxury Cart</span>
                 </button>
 
